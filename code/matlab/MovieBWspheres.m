@@ -4,7 +4,7 @@ function MovieBWspheres
 %TODO: fix perspective.
 % use functions
 
-
+%------------------------initialization-----------------------------------
 % repeatable random number generation:
 rng('default'); rng(1);
 
@@ -14,13 +14,15 @@ format compact
 
 MAKE_MOVIE = 0;
 
-randPert  = 0.05;
-iC =[1,2,4,5,6];
+randPert  = 0.05;%random perturbation of rotation, within [0,1]
+%randPert  = 0.0005;
+iC =[1,2,4,5,6];% represent the 5 types of balls respectively
 if randPert == 0
-    iC = [1,2,4,5,6];
+    iC = [1,2,4,5,6];% 
 end
 
-scaler = 8;
+scaler = 8;%scaler is used to adjust the step length of the rotation rodRotM
+           %smaller value brings worse result 
 
 %mogrify - crop <width>x<height><offset x><offset y>
 %mogrify -crop 901x726+490+93 *.png
@@ -30,9 +32,10 @@ scaler = 8;
 
 MOVIE_NAME = 'BlackWhite12spheres';
 numStep =800;
+%numStep =2000;
 FrameCount = 0;
 
-
+%ball types definitino
 BallSet = [25.6,24.3, 22.43, 19.21,18.23];
 BallAve = mean(BallSet);
 rs = BallAve./BallSet;
@@ -51,10 +54,9 @@ GoalI = [ZDN, ZDN, ZUP, ZDN,ZUP];
 GoalC = [ZDN, ZDN, ZDN, ZUP,ZUP];
 
 
+numBall = numel(ballTypes); % number of spheres
 
-numBall =numel(ballTypes); % number of spheres
-
-%%%% set up plots
+% set up plots
 figure(1);
 close(1);
 figure(1);
@@ -63,18 +65,16 @@ clf;
 %set(gcf, 'position',[6          57        1670         915]);  % full screen
 ax = axes;%('XLim',[-3,3],'YLim',[0,18.5],'ZLim',[-2,3]);
 
-
 axis equal
 hold on
 set(gcf,'Renderer','opengl')
 
 hold on
 axis off
+
 %make spheres
 [X,Y,Z]=sphere(40);
 s = zeros(numBall);
-
-% Make 12 spheres
 Rsphere = cell(numBall,1);
 Tsphere = cell(numBall,1);
 rads = ones(numBall,1);
@@ -88,7 +88,7 @@ c = 1;
 for i = 1:size(ballTypes,1)
     for j = 1:size(ballTypes,2)
         %                    [x,y,w,h]
-        rad = 1/rs(ballTypes(i,j))/sc;
+        rad = 1/rs(ballTypes(i,j))/sc;%rs = BallAve./BallSet;
         rads(c) = rad;
         Xs = rad*X;
         Ys = rad*Y;
@@ -108,7 +108,6 @@ end
 
 
 
-
 %lightangle(-45,30)
 camlight(-59,154)
 camlight(30,180,'infinite')
@@ -122,34 +121,25 @@ set(findobj(gca,'type','surface'),...
 material shiny
 
 view(0,90) %top down
-
+%view(5,54) % view at slight angle
 axis equal
-view(5,54) % view at slight angle
 axisDef = axis;
-%view(-21,38);
-%axis equal
-%axisDef = [-3.5   7   -.5    6.76   -1.    1.];
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% SIMULATION %%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% plot the balls moving.
 
-
-TurnZ = repmat(eye(3),[1,1,numBall]);
-for n = 1:numBall
-    theta = pi/12/rads(n);
-    TurnZ(:,:,n) =RotateZ(theta);
-end
 X = repmat(eye(3),[1,1,numBall]);
-psi = zeros(numBall,1);
-theta = zeros(numBall,1);
+psi = zeros(numBall,1);%deviation angle from the goal
+theta = zeros(numBall,1);%azimuth angle in horizontal plane
 
 GoalU = [ZDN, ZUP, ZDN,    ZDN, ZUP, ZDN,    ZDN, ZUP, ZDN,      ZDN, ZDN,ZDN];
 GoalI = [ZDN, ZDN, ZDN,    ZUP, ZDN, ZUP,    ZUP, ZDN, ZUP,      ZDN, ZDN,ZDN];
 GoalC = [ZDN, ZDN, ZDN,    ZDN, ZUP,ZUP,     ZDN, ZUP,ZUP,       ZDN, ZDN,ZDN];
 
 goalTimes = [2,numStep/4,2*numStep/4,3*numStep/4,numStep];
-SPEED = 0.05;%0.05; %0.01
+
 % Simulator
 for k = 1:numStep
     if sum( k ==  goalTimes)  % for making movie -- saves static frames at beginning and end
@@ -172,8 +162,9 @@ for k = 1:numStep
     % nominal sphere approx pi/4 about the z-axis
     for cnt = 1:1
         for n = 1:numBall
-            rM = RandRot(randPert);
-            zTurn = pi/6/rads(n);
+            rM = RandRot(randPert);%a random perturbation added
+            
+            zTurn = pi/4/rads(n);
             
             hgtRot = diag([1,1,1,1]);
             hgtRot(1:3,1:3) = rM*RotateZ(zTurn);
@@ -186,13 +177,13 @@ for k = 1:numStep
             set(s(n),'Matrix',Tx*Rsphere{n})
             
             % Measure the resulting error
-            zaxis = Goal(3,n)*X(:,:,n)*[0;0;1];
-            psi(n) = acos(zaxis(3));
+            zaxis = Goal(3,n)*X(:,:,n)*[0;0;1];%current goal pointing direction
+            psi(n) = acos(zaxis(3));%current angle between goal pointing direction and [0;0;1]
             
             if(abs(zaxis(3))>1)
                 display('pji(n) too big!');
             end
-            theta(n) = atan2(zaxis(2),zaxis(1));
+            theta(n) = atan2(zaxis(2),zaxis(1));%azimuth angle
         end
         axis(axisDef);
         if cnt  == 1
@@ -202,8 +193,9 @@ for k = 1:numStep
     
     %find the error (large balls have larger errors, then we average the
     %results*)
-    ux = -(rads(iC).^(-1))'*(psi(iC).^2.*cos(theta(iC)))/numel(iC);
-    uy = -(rads(iC).^(-1))'*(psi(iC).^2.*sin(theta(iC)))/numel(iC); %.^(-1)
+    ux = -(rads(iC).^(-1))'*(psi(iC).^2.*cos(theta(iC)))/numel(iC);% ¡Æ(1/r)*psi^2*cos(theta)
+    uy = -(rads(iC).^(-1))'*(psi(iC).^2.*sin(theta(iC)))/numel(iC); %.^(-1)%¡Æ(1/r)*psi^2*sin(theta)
+    
     
     % roll balls in a straight line to minimize this error
     d = sqrt(ux^2+uy^2);
@@ -216,14 +208,12 @@ for k = 1:numStep
     for n = 1:numBall
         % the rotation is scaled by the radius
         X(:,:,n) =  rodRotM(vector, -d/rads(n)/scaler)*X(:,:,n);
-        %makehgtform('axisrotate',[ax,ay,az],t)
+        
         Rsphere{n} = makehgtform('axisrotate',vector,-d/rads(n)/scaler)*Rsphere{n};
         Tx = makehgtform('translate',[0,0,0])*Tsphere{n};
         set(s(n),'Matrix',Tx*Rsphere{n})
         
         zaxis = Goal(3,n)*X(:,:,n)*[0;0;1];
-        psi(n) = acos(zaxis(3));
-        theta(n) = atan2(zaxis(2),zaxis(1));
     end
     axis(axisDef);
     updateDrawing
@@ -259,8 +249,8 @@ end
 
 
 function vrot = rodRotM(k, theta)
-%If v is a vector in \mathbb{R}^3 and k is a unit vector describing an axis of rotation
-% about which we want to rotate v by an angle Î¸ (in a right-handed sense), the Rodrigues
+%If v is a vector in R^3 and k is a unit vector describing an axis of rotation
+% about which we want to rotate v by an angle theta (in a right-handed sense), the Rodrigues
 %formula is:
 vrot = [cos(theta) + (1-cos(theta))*k(1)^2,     (1-cos(theta))*k(1)*k(2),               sin(theta)*k(2) ;
     (1-cos(theta))*k(1)*k(2),               cos(theta) + (1-cos(theta))*k(2)^2,   -sin(theta)*k(1) ;
@@ -278,10 +268,13 @@ vrot = [cos(theta) + (1-cos(theta))*k(1)^2,     (1-cos(theta))*k(1)*k(2),       
 %              0,  1,  0;
 %             -sin(theta), 0, cos(theta)];
 % end
+
 function RzTh = RotateZ(theta)
 RzTh = [cos(theta),  -sin(theta),0;
     sin(theta),   cos(theta),0;
     0,  0,  1];
+
+
 function M = RandRot(d)
 % Uniformly distributed random 3D rotation matrix using Arvo's method.
 % "Fast Random Rotation Matrices", by James Arvo. In Graphics Gems III, 1992. http://www.ics.uci.edu/~arvo/papers/RotationMat.ps http://www.ics.uci.edu/~arvo/code/rotate.c (2011-06-22)
@@ -320,7 +313,7 @@ z     = x(3)*d * 2.0;      %/* For magnitude of pole deflection. */
 %/* will guarantee that if x[1] and x[2] are uniformly distributed,  */
 %/* the reflected points will be uniform on the sphere.  Note that V */
 %/* has length sqrt(2) to eliminate the 2 in the Householder matrix. */
-
+% different definition of V from that in "Fast Random Rotation Matrices", by James Arvo. In Graphics Gems III, 1992.
 r  = sqrt( z );
 Vx = sin( phi ) * r;
 Vy = cos( phi ) * r;
@@ -337,10 +330,10 @@ Sy = Vx * st + Vy * ct;
 
 %/* Construct the rotation matrix  ( V Transpose(V) - I ) R, which   */
 % /* is equivalent to V S - R.                                        */
-
+%different sign in the M matrix from "Fast Random Rotation Matrices", by James Arvo. In Graphics Gems III, 1992.
 M = [-Vx * Sx + ct,  -Vx * Sy + st, -Vx * Vz;
     -Vy * Sx - st,  -Vy * Sy + ct, -Vy * Vz;
     Vz * Sx,        Vz * Sy,      1.0 - z];   %ATB: fixed this
 
-M = RotateZ(rand(1)*d) ;
+M = RotateZ(rand(1)*d) ;%no random perturbation in z axis orientation if not commented
 
