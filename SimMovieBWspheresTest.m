@@ -6,6 +6,7 @@ function SimMovieBWspheresTest
 % use functions
 % Possibilities:  color the sphere with 4 colors (r,g,b,y), design control
 % law to rotate desired colors up -- then we can draw pictures.
+%This code works
 
 global FrameCount MOVIE_NAME MAKE_MOVIE
 clc
