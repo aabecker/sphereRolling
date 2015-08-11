@@ -1,18 +1,15 @@
 function SimMovieBWspheresTest
+% Aaron T. Becker, 2012
+%
 % makes a movie simulating prototype 3 rolling 8 spheres from "U" to "I"
 % to "U" to "C"
 %RandStream.setDefaultStream(RandStream('mt19937ar','seed',1));
 %TODO: fix perspective.
-% use functions
-% Possibilities:  color the sphere with 4 colors (r,g,b,y), design control
-% law to rotate desired colors up -- then we can draw pictures.
-%This code works
-
 global FrameCount MOVIE_NAME MAKE_MOVIE
 clc
 format compact
 
-MAKE_MOVIE = 0;
+MAKE_MOVIE = 0; 
 
 randPert  = 0.05;
 iC =[1,2,4,5,6];
@@ -21,7 +18,7 @@ if randPert == 0
 end
 
 scaler = 8;
-
+    
 %mogrify - crop <width>x<height><offset x><offset y>
 %mogrify -crop 901x726+490+93 *.png
 %cd ~/Documents/motionlab/trunk/documents/Aaron/MagneticSphere/Matlab
@@ -38,10 +35,10 @@ BallAve = mean(BallSet);
 rs = BallAve./BallSet;
 
 
-ballTypes = [     1, 2, 1;
-    3, 4, 5;
-    3, 4, 5;
-    1, 1, 1];
+ballTypes = [     1, 2, 1;   
+                 3, 4, 5;
+                 3, 4, 5;
+                 1, 1, 1];
 ZUP = [0;0;1];  % white
 ZDN = [0;0;-1]; % black
 %         1    2    3    4   5
@@ -51,7 +48,7 @@ GoalI = [ZDN, ZDN, ZUP, ZDN,ZUP];
 GoalC = [ZDN, ZDN, ZDN, ZUP,ZUP];
 
 
-
+             
 numBall =numel(ballTypes); % number of spheres
 
 %%%% set up plots
@@ -60,7 +57,7 @@ close(1);
 figure(1);
 set(gcf,'Color',[202 	225 	255]/255);   %cornflower blue background
 clf;
-%set(gcf, 'position',[6          57        1670         915]);  % full screen
+set(gcf, 'position',[6          57        1670         915]);  % full screen
 ax = axes;%('XLim',[-3,3],'YLim',[0,18.5],'ZLim',[-2,3]);
 
 axis equal
@@ -83,7 +80,6 @@ spacing =2.4/sc;
 
 
 c = 1;
-% drawing the balls on a plane.  Each ball is half black, half white
 for i = 1:size(ballTypes,1)
     for j = 1:size(ballTypes,2)
         %                    [x,y,w,h]
@@ -92,15 +88,15 @@ for i = 1:size(ballTypes,1)
         Xs = rad*X;
         Ys = rad*Y;
         Zs = rad*Z;
-        img=imread('3colorSphere.png');%'BWsphere2.png'); %img=imread('BWsphere.png');
+            img=imread('BWsphere2.png'); %img=imread('BWsphere.png');
         spherepic = warp(Xs,Ys,Zs,img);
         s(c) = hgtransform('Parent',ax);
         set(spherepic,'Parent',s(c))
         Rsphere{c} = makehgtform('zrotate',pi/2,'yrotate',0);
-        
-        
+ 
+
         Tsphere{c} = makehgtform('translate',[spacing*(j-1),spacing*(i-1),0]);
-        set(s(c),'Matrix',Tsphere{c}*Rsphere{c})
+        set(s(c),'Matrix',Tsphere{c}*Rsphere{c}) 
         c=c+1;
     end
 end
@@ -109,9 +105,9 @@ end
 
 
 %lightangle(-45,30)
-camlight(-59,154)
-camlight(30,180,'infinite')
-camlight(90,90)
+ camlight(-59,154)
+ camlight(30,180,'infinite')
+ camlight(90,90)
 %set(gcf,'Renderer','zbuffer')
 set(findobj(gca,'type','surface'),...
     'FaceLighting','phong',...%'AmbientLightColor',[.5,0,1],...
@@ -137,8 +133,8 @@ axisDef = axis;
 
 TurnZ = repmat(eye(3),[1,1,numBall]);
 for n = 1:numBall
-    theta = pi/12/rads(n);
-    TurnZ(:,:,n) =RotateZ(theta);
+        theta = pi/12/rads(n);
+        TurnZ(:,:,n) =RotateZ(theta);  
 end
 X = repmat(eye(3),[1,1,numBall]);
 psi = zeros(numBall,1);
@@ -149,10 +145,10 @@ GoalI = [ZDN, ZDN, ZDN,    ZUP, ZDN, ZUP,    ZUP, ZDN, ZUP,      ZDN, ZDN,ZDN];
 GoalC = [ZDN, ZDN, ZDN,    ZDN, ZUP,ZUP,     ZDN, ZUP,ZUP,       ZDN, ZDN,ZDN];
 
 goalTimes = [2,numStep/4,2*numStep/4,3*numStep/4,numStep];
-SPEED = 0.05;%0.05; %0.01
-% Simulator
+%SPEED = 0.05;%0.05; %0.01
 for k = 1:numStep
-    if sum( k ==  goalTimes)  % for making movie -- saves static frames at beginning and end
+    
+    if sum( k ==  goalTimes)
         saveLotsFrames()
         %pause(2)
     end
@@ -181,13 +177,13 @@ for k = 1:numStep
             %Rsphere{n} = makehgtform('zrotate',zTurn)*Rsphere{n};
             Rsphere{n} = hgtRot*Rsphere{n};
             
-            Tx = makehgtform('translate',[0,0,0])*Tsphere{n};
+            Tx = makehgtform('translate',[0,0,0])*Tsphere{n};  %??? why not Tx=Tsphere{n}?
             set(s(n),'Matrix',Tx*Rsphere{n})
-            
+
             % Measure the resulting error
-            zaxis = Goal(3,n)*X(:,:,n)*[0;0;1];
+            zaxis = Goal(3,n)*X(:,:,n)*[0;0;1];     %??? what do you mean by "measure the resulting error"?
             psi(n) = acos(zaxis(3));
-            
+
             if(abs(zaxis(3))>1)
                 display('pji(n) too big!');
             end
@@ -204,17 +200,17 @@ for k = 1:numStep
     ux = -(rads(iC).^(-1))'*(psi(iC).^2.*cos(theta(iC)))/numel(iC);
     uy = -(rads(iC).^(-1))'*(psi(iC).^2.*sin(theta(iC)))/numel(iC); %.^(-1)
     
-    % roll balls in a straight line to minimize this error
+    % move in a straight line to minimize this error  
     d = sqrt(ux^2+uy^2);
     if(d > 0)
         vector = [uy;-ux;0]/d;
     else
         vector = [1,0,0];
     end
-    
+   
     for n = 1:numBall
         % the rotation is scaled by the radius
-        X(:,:,n) =  rodRotM(vector, -d/rads(n)/scaler)*X(:,:,n);
+        X(:,:,n) =  rodRotM(vector, -d/rads(n)/scaler)*X(:,:,n); 
         %makehgtform('axisrotate',[ax,ay,az],t)
         Rsphere{n} = makehgtform('axisrotate',vector,-d/rads(n)/scaler)*Rsphere{n};
         Tx = makehgtform('translate',[0,0,0])*Tsphere{n};
@@ -234,53 +230,53 @@ set(gcf,'name','done')
 
 
 function saveLotsFrames()
-for i = 1:60  % save final position
-    updateDrawing
-end
+    for i = 1:60  % save final position
+        updateDrawing
+    end
 
 function updateDrawing
 global FrameCount MOVIE_NAME MAKE_MOVIE
 drawnow
 if(MAKE_MOVIE)
-    
-    FrameCount=FrameCount+1;
-    if FrameCount >= 1237
-        F = getframe(gcf);
-        fname = sprintf('%s%06d.png',MOVIE_NAME,FrameCount);
-        imwrite(F.cdata, fname,'png');
-    end
-    while(FrameCount < 10)
-        updateDrawing
-    end
-    
-    
+     
+            FrameCount=FrameCount+1;
+            if FrameCount >= 1237
+                F = getframe(gcf);
+                fname = sprintf('%s%06d.png',MOVIE_NAME,FrameCount);
+                imwrite(F.cdata, fname,'png'); 
+            end
+            while(FrameCount < 10)
+                updateDrawing
+            end
+            
+
 end
 
 
 function vrot = rodRotM(k, theta)
-%If v is a vector in \mathbb{R}^3 and k is a unit vector describing an axis of rotation
-% about which we want to rotate v by an angle θ (in a right-handed sense), the Rodrigues
-%formula is:
-vrot = [cos(theta) + (1-cos(theta))*k(1)^2,     (1-cos(theta))*k(1)*k(2),               sin(theta)*k(2) ;
-    (1-cos(theta))*k(1)*k(2),               cos(theta) + (1-cos(theta))*k(2)^2,   -sin(theta)*k(1) ;
-    -sin(theta)*k(2),                       sin(theta)*k(1),                     cos(theta) ];
+ %If v is a vector in \mathbb{R}^3 and k is a unit vector describing an axis of rotation 
+ % about which we want to rotate v by an angle θ (in a right-handed sense), the Rodrigues
+ %formula is:
+    vrot = [cos(theta) + (1-cos(theta))*k(1)^2,     (1-cos(theta))*k(1)*k(2),               sin(theta)*k(2) ;
+            (1-cos(theta))*k(1)*k(2),               cos(theta) + (1-cos(theta))*k(2)^2,   -sin(theta)*k(1) ;
+            -sin(theta)*k(2),                       sin(theta)*k(1),                     cos(theta) ];
 
 
 
-% function RxTh = RotateX(theta)
+% function RxTh = RotateX(theta) 
 %     RxTh = [1,  0,  0;
 %             0, cos(theta), -sin(theta);
 %             0, sin(theta),  cos(theta)];
-%  end
+%  end   
 % function RyTh = RotateY(theta)
 %     RyTh = [ cos(theta), 0, sin(theta);
 %              0,  1,  0;
 %             -sin(theta), 0, cos(theta)];
-% end
-function RzTh = RotateZ(theta)
-RzTh = [cos(theta),  -sin(theta),0;
-    sin(theta),   cos(theta),0;
-    0,  0,  1];
+% end      
+function RzTh = RotateZ(theta) 
+    RzTh = [cos(theta),  -sin(theta),0;
+            sin(theta),   cos(theta),0;
+            0,  0,  1];
 function M = RandRot(d)
 % Uniformly distributed random 3D rotation matrix using Arvo's method.
 % "Fast Random Rotation Matrices", by James Arvo. In Graphics Gems III, 1992. http://www.ics.uci.edu/~arvo/papers/RotationMat.ps http://www.ics.uci.edu/~arvo/code/rotate.c (2011-06-22)
@@ -308,38 +304,43 @@ function M = RandRot(d)
 %  *                                                                      *
 %  *======================================================================*/
 %void rand_rotation( float x[], Matrix3 *M )
-x = rand(3,1);
+    x = rand(3,1);
 
-theta = x(1)*d * 2 *pi; %/* Rotation about the pole (Z).      */
-phi   = x(2)   * 2 *pi; %/* For direction of pole deflection. */
-z     = x(3)*d * 2.0;      %/* For magnitude of pole deflection. */
+    theta = x(1)*d * 2 *pi; %/* Rotation about the pole (Z).      */
+    phi   = x(2)   * 2 *pi; %/* For direction of pole deflection. */
+    z     = x(3)*d * 2.0;      %/* For magnitude of pole deflection. */
 
-%/* Compute a vector V used for distributing points over the sphere  */
-%/* via the reflection I - V Transpose(V).  This formulation of V    */
-%/* will guarantee that if x[1] and x[2] are uniformly distributed,  */
-%/* the reflected points will be uniform on the sphere.  Note that V */
-%/* has length sqrt(2) to eliminate the 2 in the Householder matrix. */
+    %/* Compute a vector V used for distributing points over the sphere  */
+    %/* via the reflection I - V Transpose(V).  This formulation of V    */
+    %/* will guarantee that if x[1] and x[2] are uniformly distributed,  */
+    %/* the reflected points will be uniform on the sphere.  Note that V */
+    %/* has length sqrt(2) to eliminate the 2 in the Householder matrix. */
 
-r  = sqrt( z );
-Vx = sin( phi ) * r;
-Vy = cos( phi ) * r;
-Vz = sqrt( 2.0 - z );
+    r  = sqrt( z );
+    Vx = sin( phi ) * r;
+    Vy = cos( phi ) * r;
+    Vz = sqrt( 2.0 - z );    
 
-%/* Compute the row vector S = Transpose(V) * R, where R is a simple */
-%/* rotation by theta about the z-axis.  No need to compute Sz since */
-%/* it's just Vz.                                                    */
+    %/* Compute the row vector S = Transpose(V) * R, where R is a simple */
+    %/* rotation by theta about the z-axis.  No need to compute Sz since */
+    %/* it's just Vz.                                                    */
 
-st = sin( theta );
-ct = cos( theta );
-Sx = Vx * ct - Vy * st;
-Sy = Vx * st + Vy * ct;
+    st = sin( theta );
+    ct = cos( theta );
+    Sx = Vx * ct - Vy * st;
+    Sy = Vx * st + Vy * ct;
 
-%/* Construct the rotation matrix  ( V Transpose(V) - I ) R, which   */
-% /* is equivalent to V S - R.                                        */
+    %/* Construct the rotation matrix  ( V Transpose(V) - I ) R, which   */
+   % /* is equivalent to V S - R.                                        */
 
-M = [-Vx * Sx + ct,  -Vx * Sy + st, -Vx * Vz;
-    -Vy * Sx - st,  -Vy * Sy + ct, -Vy * Vz;
-    Vz * Sx,        Vz * Sy,      1.0 - z];   %ATB: fixed this
+   M = [-Vx * Sx + ct,  -Vx * Sy + st, -Vx * Vz;
+         -Vy * Sx - st,  -Vy * Sy + ct, -Vy * Vz;
+        Vz * Sx,        Vz * Sy,      1.0 - z];   %ATB: fixed this
+    
+    M = RotateZ(rand(1)*d) ;
 
-M = RotateZ(rand(1)*d) ;
+
+
+
+
 
