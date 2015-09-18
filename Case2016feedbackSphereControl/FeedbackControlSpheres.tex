@@ -1,0 +1,947 @@
+% 
+
+\documentclass[letter paper, 10pt, conference]{ieeeconf}
+\overrideIEEEmargins
+\IEEEoverridecommandlockouts
+\usepackage{calc}
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage{color}
+\usepackage{cite}
+\usepackage{overpic}
+\usepackage{textcomp}
+\graphicspath{{./pictures/pdf/},{./pictures/ps/},{./pictures/png/},{./pictures/jpg/}}
+\usepackage[caption=false,font=footnotesize]{subfig}
+\usepackage{soul}
+\usepackage{algorithmic}
+\usepackage{algorithm} 
+\usepackage{rotating}
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks =true,
+  urlcolor = black,
+  linkcolor = black
+}
+\newcommand{\todo}[1]{\vspace{5 mm}\par \noindent \framebox{\begin{minipage}[c]{0.98 \columnwidth} \ttfamily\flushleft \textcolor{red}{#1}\end{minipage}}\vspace{5 mm}\par}
+
+%% ABBREVIATIONS
+\newcommand{\ARLfull}{Aero\-space Ro\-bot\-ics La\-bora\-tory }
+\newcommand{\ARL}{\textsc{arl}}
+\newcommand{\JPL}{\textsc{jpl}}
+\newcommand{\PRM}{\textsc{prm}}
+
+\newcommand{\CM}{\textsc{cm}}
+\newcommand{\SVM}{\textsc{svm}}
+\newcommand{\NN}{\textsc{nn}}
+\newcommand{\prm}{\textsc{prm}}
+\newcommand{\lemur}{\textsc{lemur}}
+\newcommand{\Lemur}{\textsc{Lemur}}
+\newcommand{\LP}{\textsc{lp}} 
+\newcommand{\SOCP}{\textsc{socp}}
+\newcommand{\SDP}{\textsc{sdp}}
+\newcommand{\NP}{\textsc{np}}
+\newcommand{\SAT}{\textsc{sat}}
+\newcommand{\LMI}{\textsc{lmi}}
+\newcommand{\hrp}{\textsc{hrp\nobreakdash-2}}
+\newcommand{\DOF}{\textsc{dof}}
+\newcommand{\UIUC}{\textsc{uiuc}}
+%% MACROS
+\newcommand{\Uspace}{\mathcal{U}}
+\providecommand{\abs}[1]{\lvert#1\rvert}
+\providecommand{\norm}[1]{\lVert#1\rVert}
+\providecommand{\normn}[2]{\lVert#1\rVert_#2}
+\providecommand{\dualnorm}[1]{\norm{#1}_\ast}
+\providecommand{\dualnormn}[2]{\norm{#1}_{#2\ast}}
+\providecommand{\set}[1]{\lbrace\,#1\,\rbrace}
+\providecommand{\cset}[2]{\lbrace\,{#1}\nobreak\mid\nobreak{#2}\,\rbrace}
+\providecommand{\lscal}{<}
+\providecommand{\gscal}{>}
+\providecommand{\lvect}{\prec}
+\providecommand{\gvect}{\succ}
+\providecommand{\leqscal}{\leq}
+\providecommand{\geqscal}{\geq}
+\providecommand{\leqvect}{\preceq}
+\providecommand{\geqvect}{\succeq}
+\providecommand{\onevect}{\mathbf{1}}
+\providecommand{\zerovect}{\mathbf{0}}
+\providecommand{\field}[1]{\mathbb{#1}}
+\providecommand{\C}{\field{C}}
+\providecommand{\R}{\field{R}}
+\providecommand{\Hcal}{$\mathcal{H}$}
+\providecommand{\Vcal}{$\mathcal{V}$}
+\DeclareMathOperator{\conv}{conv}
+\DeclareMathOperator{\cone}{cone}
+\DeclareMathOperator{\homog}{homog}
+\DeclareMathOperator{\domain}{dom}
+\DeclareMathOperator{\range}{range}
+\providecommand{\polar}{\triangle}
+\providecommand{\ainner}{\underline{a}}
+\providecommand{\aouter}{\overline{a}}
+\providecommand{\binner}{\underline{b}}
+\providecommand{\bouter}{\overline{b}}
+\newcommand{\D}{\nobreakdash-\textsc{d}}
+\newcommand{\Cspace}{\mathcal{R}}
+%\newcommand{\Fspace}{\mathcal{F}}
+\providecommand{\Fspace}{\Cspace_\text{free}}
+\providecommand{\free}{\text{\{}\mathsf{free}\text{\}}}
+\providecommand{\iff}{\Leftrightarrow}
+\providecommand{\subinner}[1]{#1_{\text{inner}}}
+\providecommand{\subouter}[1]{#1_{\text{outer}}}
+\providecommand{\Ppoly}{\mathcal{X}}
+\providecommand{\Pproj}{\mathcal{Y}}
+\providecommand{\Pinner}{\subinner{\Pproj}}
+\providecommand{\Pouter}{\subouter{\Pproj}}
+\DeclareMathOperator{\argmax}{arg\,max}
+\providecommand{\Aineq}{B}
+\providecommand{\Aeq}{A}
+\providecommand{\bineq}{u}
+\providecommand{\beq}{t}
+\DeclareMathOperator{\area}{area}
+\newcommand{\Rstart}{R_\text{start}}
+\newcommand{\Rgoal}{R_\text{goal}}
+\newcommand{\contact}[1]{\Cspace_{#1}}
+\newcommand{\feasible}[1]{\Fspace_{#1}}
+\DeclareMathOperator{\myacos}{acos}
+\DeclareMathOperator{\mytrace}{trace}
+\providecommand{\acos}[1]{\myacos\left(#1\right)}
+\providecommand{\trace}[1]{\mytrace\left(#1\right)}
+%\providecommand{\abs}[1]{\lvert#1\rvert}
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{lemma}[theorem]{Lemma}
+
+
+%\newcommand{\todo}[1]{
+%  \textcolor{Red}{\footnotesize \textsf{#1}}
+%}
+
+
+
+\begin{document}
+\title{\LARGE \bf 
+Feedback Control of Multiple Balls using One Plate-Ball System
+}
+\author{Yu Huang and  Aaron T. Becker%, 
+\thanks{{Yu Huang and A. Becker are with the Department of Electrical and Computer Engineering,  University of Houston, Houston, TX 77204-4005 USA {\tt\small  \{sshahrokhi2, atbecker\}@uh.edu}
+}
+} %\end thanks
+} % end author block
+\maketitle
+
+
+
+
+\begin{abstract}
+In previous work we examined  the classical plate-ball system w
+
+In this paper we revisit the classical plate-ball system and prove this system remains controllable under model perturbation that scales the ball radius by an unknown but bounded constant. 
+We present an algorithm for approximate steering and validate the algorithm with hardware experiments. To perform these experiments, we introduce a new version of the plate-ball system based on magnetic actuation.  This system is easy to implement and, with our steering algorithm, enables simultaneous manipulation of multiple balls with different radii. 
+\end {abstract}
+
+
+
+	   
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}\label{sec:Intro}%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+In previous work \todo{ [[insert references]] }we proved that a plate-ball system can be used in open-loop (no feedback) to steer a ball of unknown radius from an initial orientation to a desired orientation.  The work relied on a proof of controllability inspired by work in ensemble control [[insert references]].
+
+In this work, we show how this same proof of controllability can be used to derive feedback controllers that can simultaneously roll multiple spheres from arbitrary initial orientations to goal locations using a sphered input provided by a single moving plate system.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Prior work}\label{sec:PriorWork}%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+Revisit the proof of controllability
+\todo{ insert proof}
+
+Reference other peoples work on ensemble control
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Theory}\label{sec:theory}%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+This section describes our plate-ball system, the equations of motion, the error metrics, techniques for approximating rotation about the worlds $z$-axis, and the effects of rolling a sphere.
+
+\subsection{Review on Quaternions}
+
+A unit quaternion can represent either orientation or a rotation.  The format of a quaternion is
+\begin{align}
+\psi_i = \cos( \theta) \label{eq:Quaternion}
+\end{align}
+where  \todo{put constraints}
+
+
+A rotation about the world $x$-axis by angle $\theta$ is
+\begin{align}
+ {\bf q}_x(\theta) = \cos( \theta) \label{eq:QuaternionXaxis}
+\end{align}
+
+Similarly, a rotation about the world $y$-axis by angle $\theta$ is
+\begin{align}
+ {\bf q}_y(\theta) = \cos( \theta) \label{eq:QuaternionYaxis}
+\end{align}
+
+A rotation about the world $z$-axis is
+\begin{align}
+\psi_i = \cos( \theta) \label{eq:QuaternionZaxis}
+\end{align}
+
+A rotation about the unit axis $[u_x,u_y,u_z]^top$ is
+\begin{align}
+\psi_i = \cos( \theta) \label{eq:QuaternionUnitaxis}
+\end{align}
+
+
+Composing rotations with quaternions is represented by multiplication.  A composite rotation formed by rotating ${\bf q}_1$ followed by  ${\bf q}_2$  is 
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%
+\subsection{The plate-ball system}
+%%%%%%%%%%%%%%%%%%
+
+    \begin{figure}%[htb]
+	\begin{center}
+	\begin{overpic}[width=.9\columnwidth]{CNCsetupPic}
+	\end{overpic}
+	\end{center}
+	\vspace{-1em}
+	\caption{ \label{fig:CNCtable} The ensemble plate-ball system consists of an array of $n$ metal spheres separated from an array of $n$ magnets by a stationary sheet of cardboard.  The magnet array is attached to an $xy$ CNC table, and the spheres roll without slipping above their respective magnets.  
+In this paper we prove this system, which applies the same control to each sphere, is approximately controllable.  We then describe and implement controllers that approximately steer spheres of unknown diameters from a starting orientation to a goal orientation.	
+}\vspace{-1em}
+\end{figure}
+
+
+
+A plate ball system is composed of ...
+
+%For Yu Huang:   $x$   x   \emph{x}  {\bf x }
+
+
+Equations for one sphere on a plate-ball system.  Consider one ball with radius $r_i$.  The plateball system can apply two inputs, a movement in the $x$ irection, and a movement in the $y$ direction
+
+
+\begin{align}
+\psi_i = \cos( \theta) \label{eq:PlateBallXandYrotations}
+\end{align}
+
+this sphere cannot be rotated directly around the world $z$-axis.  However, we can approximate $z$-rotation by Lie bracket motion.
+
+We will proceed by showing how to construct $R_z\!\big(\hat\theta(\epsilon)\big)$.
+For small time $dt$, by rolling clockwise in a small square pattern on the plane, we can generate movement about the $z$-axis.
+\begin{align*}
+\exp\{\frac{-1}{\epsilon} \sqrt{dt} \Omega_y\}
+  		    \exp\{\frac{-1}{\epsilon} \sqrt{dt} \Omega_x\}&  \\
+	\quad \cdot		     \exp\{\frac{1}{\epsilon} \sqrt{dt} \Omega_y\}  
+		      \exp\{\frac{1}{\epsilon} \sqrt{dt} \Omega_x\} &\approx  I + \epsilon^{-2} dt \Omega_z\\
+	  &=  \exp\{ \epsilon^{-2} dt  \Omega_z\}
+	  \end{align*}
+This Lie bracket movement generates the previously restricted motion about the $z$-axis.	    
+
+An alternate method to approximate motion around the $z$-axis is to roll a sphere  along a circular path starting at the sphere contact point.
+Consider a sphere with radius $r_i$ centered at $(0,0)$ that rolls around a circular path of radius $r_c$ centered at $r_c (\cos(\alpha_c), \sin(\alpha_c))$.  The resulting motion can be decomposed into a rotation about an axis from $[ r_c \cos(\alpha_c), r_c\sin(\alpha_c),0]^\top$ to $[ 0,0,r_i]^\top$, followed by a rotation about the world $z$-axis of...
+
+\begin{align}
+\psi_i = \cos( \theta) \label{eq:RotatingAboutACircle}
+\end{align}
+
+If the sphere only rolls along an arc of length $\ell_c$, the resulting rotation
+
+\begin{align}
+{\bf q}(r_c, \alpha_c, \ell_c, r_i)   = \cos( \theta) \label{eq:RotatingAboutACircleArc}
+\end{align}
+
+
+For our purposes in this paper we want to align the $z$-axis of the sphere with the world $z$ axis.  The deviation of one sphere form the world  $z$ axis can be described in terms of $theta_i$ and $\psi_i$  
+
+
+ The error metric for one sphere is derived by
+ 
+\begin{align}
+\psi_i = \cos( \theta) \label{eq:errorForOneSphere}
+\end{align}
+
+
+ the error metric for multiple spheres is given by sum of squared error
+ 
+\begin{align}
+\psi_i = \cos( \theta) \label{eq:errorForManySpheres}\end{align}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Closed Loop Control}\label{sec:ClosedLoopControl}%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+We start with a convenient mathematical fiction, and assume an input exists that rotates all spheres about the world $z$ axis at the constant rate of $1/r_i$.  
+Show that under this input the error metric \eqref{eq:errorForManySpheres} does not change.
+
+\subsection{A convenient fictitious input}
+
+We define a Lyapunov function
+
+\begin{align}
+\psi_i = \cos( \theta) \label{eq:MultipleSphereLyapunov}
+\end{align}
+
+with derivative
+
+\begin{align}
+\psi_i = \cos( \theta) \label{eq:MultipleSphereLyapunovDerivative}
+\end{align}
+
+We then select a control function that drives the Lyapunov function to 0.
+\begin{align}
+\psi_i = \cos( \theta) \label{eq:ControlLyapunovFunction}
+\end{align}
+
+\subsection{Steering a real system}
+
+We know that if we could rotate about the z axis with rotation rates $1/r_i$.  , it doesn't change the error of the system
+We can then move after each roation to descrese our error 
+We can continue until the system is at our goal state.
+ 
+ 
+however, we cannot rotate about the z-axis.
+
+We can roll the system along circular arcs, as shown by Eq. \eqref{eq:RotatingAboutACircleArc}
+
+
+Our problem is then to find $(r_c, \alpha_c, \ell_c, r_i)  $ that reduces \eqref{eq:errorForManySpheres}.  We then repeat this process until the error reduces to an acceptable level, or time runs out
+
+
+Some plots of this.
+
+
+Long description of your optimization function.
+
+
+
+
+%P1: the classical system
+%Manipulation by rolling contacts is a convenient way to achieve dexterity with simple hardware.  This problem is of considerable interest to the robotic community (see \cite{Brockett1993, Armour2006, Marigo2000, Bicchi1995, Choudhury2001, Mukherjee2002,Date2004,Oriolo2005,Svinin2008a,Casagrande2009}).  
+
+The plate-ball system is a canonical example of manipulation by rolling contacts \cite{Brockett1993}. In the classical version of this system, the ball is held between two parallel plates and manipulated by maneuvering the upper plate while holding the lower plate fixed.  The ball can be brought to any position and orientation though translations of the upper plate.
+%The classical plate-ball system manipulates a ball in $SO(3)$ by rolling without slipping in the plane. 
+
+%P2: the variant of the problem that we consider, noting right up front that this variant has also been consider by (for example?) Oriolo et al.
+ We consider a variant of the plate-ball system in which the ball radius is an unknown but bounded constant. This variant has been considered previously by Oriolo et al. \cite{Oriolo2005}, who proposed a method of iterative feedback control. We are interested in the case where no sensor feedback is available.
+ 
+ %P3: our approach to solving this problem
+ Our main contribution is to prove this system is still controllable and present an algorithm for approximate (open-loop) steering.  To do so, we apply the framework of ensemble control theory \cite{Brockett1999,Li2009,Li2011,Becker2012} to derive an approximate  %Khaneja2000,Li2006,Li2006b,Li2006a,Li2007
+steering algorithm. % for a sphere that rolls without slipping in the presence of model perturbation that scales the sphere radii by an unknown but bounded constant. 
+The basic idea, similar to early work on sensorless manipulation \cite{Erdmann1988}, is to maintain the set of all possible configurations of the sphere and to select inputs that reduce the size of this set and drive it toward some goal configuration. The key insight is that the evolution of this set can be described by a family of control systems that depend continuously on the unknown constant. Ensemble control theory provides conditions under which it is possible to steer this entire family to a neighborhood of the goal configuration with a single open-loop input trajectory. These conditions mimic classical tests of nonlinear controllability like
+the Lie algebra rank condition~\cite{Sussmann1972}
+but involve approximations by repeated Lie bracketing that are reminiscent of seminal work on steering nonholonomic systems by Lafferriere and Sussman~\cite{Lafferriere1993}.
+
+%P4: the other contribution of this paper, your new platform (I might even think of a clever way to structure the intro so you can say something like this paper has two contributions, the first one (the "main" one) is blah (ensemble control stuff) and the second one is blah (new platform stuff)
+Our second contribution is a new experimental version of the plate-ball system based on magnetic actuation, shown in Fig.~\ref{fig:CNCtable}.  This platform has several advantages over traditional plate-ball systems.  The magnetic actuation makes the mechanism easy to implement, allows an unobstructed view of the ball on the plane, and enables simultaneous manipulation of multiple balls.  If these balls have unique radii, by using our algorithm this system can steer each ball to arbitrary orientations.
+
+%P5: outline of the paper, explaining concisely what is where and why
+The remainder of this paper proceeds as follows. We begin with a brief review of related work, focusing on sensorless part orientation and solutions to the plate-ball problem (Section \ref{sec:RelatedWork}). We then present our problem variation (Section \ref{sec:ProblemStatement}) and prove it is controllable (Section \ref{sec:Controllability}).  We design an approximate steering algorithm (Section \ref{sec:ControllerDesign}), 
+and validate the algorithm with a new hardware platform (Section \ref{sec:HardwareImplementation}).  We discuss broader implications in our concluding remarks (Section \ref{sec:Conclusion}).
+%In this paper we consider the problem of steering a sphere to a desired configuration despite model perturbations that scale the sphere diameter by an unknown but bounded constant.  
+%We focus on the sphere because it is a ubiquitous elementary component in manufacturing.  Additionally, sphere manipulation through rolling is a canonical example of a non-flat nonholonomic mechanism.   
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Related Work}\label{sec:RelatedWork}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Sensorless Part Orientation}
+We are motivated by progress in sensorless part manipulation, particularly the work of   \cite{Erdmann1988}  and \cite{Canny1994} showing that simple actuators are often sufficient to robustly orient a wide array of planar objects without using sensors.  These works employed parallel-jaw grippers  \cite{Canny1994} and a tray that could be tilted in two axex  \cite{Erdmann1988}. These methods exploit differences in part geometry. Robustly orienting the rounded surface of a sphere offers special challenges due to its inherent symmetry. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Sphere Manipulation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Manipulation of spherical objects by rolling has been investigated in depth by members of the math, control, and robotic manipulation communities. % For an overview of rolling both in nature and robotics, see \cite{Armour2006}.  %%% BAD REFERENCE: only about spherical rolling robots, not manipulation --however, this might be cool for commanding a bunch of spherical robots with the same input....
+ This research can be traced to Brockett and Dai who analyzed an approximation of the problem and determined the optimal controller for this approximation\cite{Brockett1993}.  
+Jurdjevic determined the optimal shortest length paths, showing that the optimal solution curve minimizes the integral of the geodesic curvature\cite{Jurdjevic1993}. %and that these curves are solutions to Euler's elastica problem
+  Li provided a symbolic algorithm for steering the system \cite{Li1990}, while Marigo gave a numeric algorithm \cite{Marigo2000},
+and Oriolo and Vendittelli presented an iterative approach for stabilizing the plate-ball system \cite{Oriolo2005}.  %This was applied specifically to 
+
+This problem has produced several practical stabilizing controllers \cite{Date 2004, Casagrande2009}. %Morin2008,
+Das and Mukherjee derive a motion planner for a plate-ball system with exponential stability \cite{Das2004}.
+
+Svinin and Hosoe extended the problem for plate-ball systems with limited contact area \cite{Svinin2008a}.  This enables manipulations of objects with spherical portions.  % removed Svinin2008
+
+Several robotic plate-ball systems solutions have been implemented (see \cite{Marigo2000, Bicchi1995}).
+Our approach using multiple balls is inherently underactuated, and in that respect is similar to Choudhury and Lynch's work that showed a single degree-of-freedom manipulator was sufficient for orienting a sphere.  They  designed a successful experiment consisting of an elliptical bowl mounted on top of a linear motor with the bowl's primary axis oriented 45 degrees from the linear motor orientation \cite{Choudhury2001}.
+
+
+%% COOL, BUT DOESN"T APPLY
+%Future work could extent the control demonstrated in this paper to closed loop manipulation.  Similar examples in robotics include recent work by Yim and Sitti involving a soft robot containing two permanent magnets that are rolled about a walled 3D environment by an external magnet \cite{Yim2012}.  Using permanent magnets allowed them to reliably orient either the north or south pole of the robot at arbitrary points on the boundary of the environment. 
+   
+   The control algorithms demonstrated in this work might find application at a much smaller scale using microspheres.  Studies by Ding et al.\ on rolling friction of microspheres \cite{DING2007} demonstrate that even on the micro-scale spheres can roll with little slip.  A study by Agayan et al.\ of the slipping friction of optically and magnetically manipulated microspheres on a glass-water interface demonstrate techniques for manipulation that may benefit from our methodology \cite{Agayan2008}.  
+   
+   Lastly, in this paper we demonstrate that a continuum of differently-sized spheres is controllable.  This means a finite number of spheres with heterogeneity in diameter are also controllable.   Such a controller would be similar to the micro manipulation of Diller and Sitti et al.  They  controlled the 2D coordinates of multiple micro-scale permanent magnets by exploiting heterogeneity in the magnet's dimensions \cite{Diller2012}.  
+
+\subsection{Ensemble Control}
+We are motivated by the work on \emph{ensemble control} in % {Brockett1999,Li2009,Li2011,
+\cite{Brockett1999,Li2009,Beauchard2010a,Beauchard2010}.  These works studied the controllability properties of the \emph{Bloch equations}, a unit vector in $\R^3$.  Much of this work can be applied to the sphere, which moves in $SO(3)$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Problem Statement}\label{sec:ProblemStatement}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+We  are interested in approximate steering of the orientation of a sphere with unknown diameter by rolling on the plane.
+\subsection{One Sphere}
+
+Consider a sphere of radius $r$ that rolls without slipping on a plane. 
+Ignoring position, we describe its configuration by the rotation matrix $R$ and its configuration space by $SO(3)$. The control inputs are the rolling speed along the $x$-axis
+$u_{1}$
+and the rolling speed along the $y$-axis
+$u_{2}$.
+Corresponding to these inputs, we define 
+a basis for the Lie algebra $\Omega_x,\Omega_y$ where
+\[
+\Omega_x \!=\! \begin{bmatrix}
+0 &0 & 0 \\
+0 &0 & 1\\
+0&-1 & 0 \end{bmatrix}\!\!, 
+\Omega_y \!=\!\begin{bmatrix}
+0 &0 & -1 \\
+0 &0 & 0\\
+1&0 & 0 
+\end{bmatrix}\!\!,
+\Omega_z \!=\! \begin{bmatrix}
+0 &-1 & 0 \\
+1 &0 & 0 \\
+0 &0 & 0 \\
+\end{bmatrix}\!\!,
+\]
+%vector fields~$g_1,g_2\colon\Cspace\to{T_q\Cspace}$ by
+%\[
+%g_1(R) =R/r\begin{bmatrix}
+%0 &0 & -1 \\
+%0 &0 & 0\\
+%1&0 & 0 \\
+%\end{bmatrix} 
+%\quad
+%g_2(R) = R/r\begin{bmatrix}
+%0 &0 & 0 \\
+%0 &0 & 1\\
+%0&-1 & 0 \\
+%\end{bmatrix} 
+%\]
+and write the kinematics of the sphere in the standard form
+\begin{equation}
+\label{eq:one}
+\dot{R}(t) = \frac{1}{r} R(t)   \bigg(  \Omega_x  u_1(t) + \Omega_y u_2(t) \bigg).
+\end{equation}
+Given $\Rstart,\Rgoal\in SO(3)$ and an error bound $\mu>0$, the approximate steering
+problem
+is to find open-loop inputs
+\[
+\left(u_{1}(t),u_{2}(t)\right) \colon [0,T] \to \Uspace
+\]
+that result in $R(0)=\Rstart$ and $\operatorname{dist}\!\left(R(T),\Rgoal\right)\leq\mu$ for free final time $T$, where \[\operatorname{dist}\!\left(R_a,R_b\right) = \arccos\left((\operatorname{trace}\left(R_a^{-1}R_b\right)-1)/2\right)\] is the minimum angular distance between two rotation matrices.
+If such inputs always exist, then we say that \eqref{eq:one} is {\em approximately controllable}---and indeed they do, since $\Omega_x $, $\Omega_y$, and the Lie bracket $[\Omega_x,\Omega_y]$ span the tangent space $T_{R}\left(SO(3)\right)$ everywhere.
+
+
+    
+
+\subsection{Ensemble of Spheres}
+
+We will solve this same approximate steering problem, but under model perturbation of the sphere radius that scales the rolling speeds $u_{1}$ and $u_{2}$ by some unknown, bounded constant $\epsilon$. The resulting kinematics have the form
+\begin{equation}
+\label{eq:oneuncertain}
+%\frac{d \,R(t)}{dt} 
+\dot{R}(t) = \frac{\epsilon}{r}  R(t) \bigg(  \Omega_x  u_1(t) + \Omega_y u_2(t) \bigg).
+%\begin{bmatrix}
+%0 &0 & -u_2\\
+%0 &0 & u_1\\
+%u_2&-u_1 & 0 \\
+%\end{bmatrix} 
+\end{equation}
+where $\epsilon \in [1-\delta, 1+\delta]$ for some $0 \leq \delta < 1$. Rather than try to steer one sphere governed by \eqref{eq:oneuncertain}---where $\epsilon$ is unknown---our approach is to steer an uncountably infinite collection of spheres parameterized by~$\epsilon$, each one governed by
+\begin{equation} \label{eq:ensemble}
+\dot{R}(t,\epsilon) = \frac{\epsilon}{r}  R(t,\epsilon) \bigg( \Omega_x u_1(t) + \Omega_y u_2(t) \bigg).
+\end{equation}
+Following the terminology introduced  %Khaneja2000,Li2006,Li2006b,Li2006a,Li2007
+by~\cite{Brockett1999,Li2009,Li2011}, we call this fictitious collection of spheres an {\em ensemble} and call~\eqref{eq:ensemble} an {\em ensemble control system}.
+The idea is that if we can find
+open-loop inputs $u_{1}(t)$ and $u_{2}(t)$ that result in $R(0,\epsilon)=\Rstart$ and
+$\operatorname{dist}\!\left(R(T,\epsilon),\Rgoal\right)\leq\mu$
+for all $\epsilon \in [1-\delta,1+\delta]$, then we can certainly guarantee that the actual sphere, which corresponds to one particular value $\epsilon^{\ast}$ of $\epsilon$, will satisfy $\operatorname{dist}\!\left(R(T,\epsilon^{\ast}),\Rgoal\right)\leq\mu$.
+If such inputs always exist, then we say that \eqref{eq:ensemble} is {\em ensemble controllable},
+interpreted as being approximately controllable on the function space $L_{2}\left([1-\delta,1+\delta],SO(3)\right)$.
+
+
+
+
+
+
+%\subsection{Ensemble Control of Spheres}
+%%\begin{figure}%[htb]
+%%	\begin{center}
+%%		\begin{overpic}[width=.49\columnwidth]{SphereSimMid}\end{overpic}
+%%		\begin{overpic}[width=.49\columnwidth]{SphereSimEnd}\end{overpic}
+%%	\end{center}
+%%	\label{fig:9sphereSim}
+%%	\caption{ Nine spheres, with radius $[0.5,\ldots,1.5]$ roll down identical grooves, shown in blue.  All spheres finish with a net rotation of $\approx\pi$ about their $y$-axis.}
+%%\end{figure}
+%We will solve this motion planning problem, but under a model perturbation that scales the sphere diameter by some unknown, bounded constant, i.e.  $r_{actual} = r \epsilon$, $\epsilon \in [1-\delta,1+\delta]$.  However, rather than try to steer a single sphere governed by the perturbed kinematic model, our approach is to steer an uncountably infinite collection of spheres parameterized by $\epsilon$, each governed by the exact kinematic model
+%\begin{align}
+%\frac{d \,x(t,\epsilon)}{dt} &= u, \quad \frac{d \,y(t,\epsilon)}{dt} = v,\nonumber\\
+%\frac{d \,R(t,\epsilon)}{dt} &= R(t,\epsilon) \begin{bmatrix}
+%0 &0 & -u/(r \epsilon) \\
+%0 &0 & v/(r \epsilon) \\
+%u/(r \epsilon) &-v/(r \epsilon)  & 0 \\
+%\end{bmatrix} 
+%\label{eqn:EnsSphereSys}
+%\end{align}
+%
+%Following the terminology introduced by recent work in control theory \cite{Li2006,Li2006a,Li2006b,Li2007,Li2011,Becker2010}, we call this fictitious collection of spheres an \emph{ensemble} and call the model \eqref{eqn:EnsSphereSys} an \emph{ensemble control system}.  The idea is that if we can find  open-loop inputs $u(t)$ and $v(t)$ that result in $g(0,\epsilon) = g_{start}$ and  $\norm{g(T,\epsilon) - g_{goal}} \le \mu$ for all $\epsilon  \in [1-\delta,1+\delta]$, then we can certainly guarantee that the actual sphere, which corresponds to one particular value of $\epsilon$, will be steered from the start to the goal.
+%
+%One optimization problem then is to minimize  
+%\begin{align}
+%\frac{1}{2}\int_0^T\left(u^2+v^2\right)dt
+%\label{eqn:EnsSphereOpt}
+%\end{align}
+%over all possible solution curves of \eqref{eqn:EnsSphereSys} under the constraint that  $\norm{g(T,\epsilon) - g_{goal} }
+%\le \mu$, $ \forall \epsilon  \in [1-\delta,1+\delta]$ for some $\mu > 0$.  
+% 
+%If we want the sphere rolling to be driven by gravity, it would be convenient to constrain  $\left[u,v\right] \in \R^+$.  %Section \ref{sec:Mechanics}  considers controlling the orientation of the ensemble under this constraint.
+%
+%A solution to \eqref{eqn:EnsSphereOpt} is not included in this note.   A proof of controllability and an algorithm for steering an ensemble toward  a goal orientation as a function of $\epsilon$ in $SO(3), \mathbf{R}(\epsilon)_{goal}$ is given in Section III-A of \cite{Li2009}.  Interestingly, this algorithm is in-place such that $\Delta x = \Delta y = 0$.  Therefore, to get to a goal $[x,y,\mathbf{R} _{goal}]\in \R^2\times SO(3)$ requires only first rolling about the world $y$-axis to the desired $x$ position, followed by a roll about the world $x$-axis to the desired $y$ position.  These two movements generate some rotation $\mathbf{R}(\epsilon)_{x,y}$.  Since the algorithm in III-A of \cite{Li2009} is in-place, we can apply it to generate the rotation $\left(\mathbf{R}(\epsilon)_{x,y}\right)^{-1}\mathbf{R}(\epsilon)_{goal}$ and we have the full solution.    Note that a different solution based on Fourier coefficients is given by Pryor in \cite{Pryor2007,Pryor2007a}. Neither of these feasible solutions is proven to be optimal. 
+%
+
+% that cannot be stabilized by smooth feedback 
+%why we care:  
+
+%It is obvious that many factory processes have high accuracy;  low precision ball bearings are accurate within $\pm$0.005 inches will precision within $\pm$0.00003in \cite{Eschmann1985}.     Other processes do not:  micro spheres (cite), organic products (cite), grown spheres (cite)
+%
+%Moreover, spheres are a fundamental component used in many other designs
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Controllability}\label{sec:Controllability}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+We will now prove that the system \eqref{eq:ensemble} is ensemble controllable. We will do this by using repeated bracketing to get higher-order powers of $\epsilon$, and then by using polynomial approximation to construct arbitrary vector flows. This approach is similar to what appears in \cite{Li2009}, and involves computations that are reminiscent of \cite{Lafferriere1993}.
+\begin{theorem}
+\label{thm:controllable}
+The system \eqref{eq:ensemble}  is ensemble controllable.
+\end{theorem}
+\proof
+Any rotation $A$ in $SO(3)$ can be parameterized by the rotations $\theta,\phi,\psi$ about the world $z$-axis, $x$-axis and then $z$-axis.
+\[ A = R_z(\theta)R_x(\phi)R_z(\psi) \]
+To approximate any rotation $A$ with an ensemble, it is then sufficient to construct the rotations $R_z\!\big(\hat\theta(\epsilon)\big) \approx R_z(\theta)$, $R_x\!\big(\hat\phi(\epsilon)\big) \approx R_x(\phi)$ and $R_z\!\big(\hat\psi(\epsilon)\big)\approx R_z(\psi)$.
+
+We will proceed by showing how to construct $R_z\!\big(\hat\theta(\epsilon)\big)$.
+For small time $dt$, by rolling clockwise in a small square pattern on the plane, we can generate movement about the $z$-axis.
+\begin{align*}
+\exp\{\frac{-1}{\epsilon} \sqrt{dt} \Omega_y\}
+  		    \exp\{\frac{-1}{\epsilon} \sqrt{dt} \Omega_x\}&  \\
+	\quad \cdot		     \exp\{\frac{1}{\epsilon} \sqrt{dt} \Omega_y\}  
+		      \exp\{\frac{1}{\epsilon} \sqrt{dt} \Omega_x\} &\approx  I + \epsilon^{-2} dt \Omega_z\\
+	  &=  \exp\{ \epsilon^{-2} dt  \Omega_z\}
+	  \end{align*}
+This Lie bracket movement generates the previously restricted motion about the $z$-axis.	    
+%Here  \begin{align*}
+%\Omega_z = \begin{bmatrix}
+%0 &-1 & 0 \\
+%1 &0 & 0 \\
+%0 &0 & 0 \\
+%\end{bmatrix}. 
+% \end{align*}
+
+%That is $[ \epsilon^{-1}\Omega_x,\epsilon^{-1}\Omega_y] = \epsilon^{-2}\Omega_z$.
+% Here $\Omega_x,\Omega_y,\Omega_z,$ are  the differential inputs
+% \begin{align*}
+%\Omega_x = \begin{bmatrix}
+%0 &0 & 0 \\
+%0 &0 &-1 \\
+%0 &1 & 0 \\
+%\end{bmatrix},  
+%\Omega_y = \begin{bmatrix}
+%0 &0 & 1 \\
+%0 &0 & 0 \\
+%-1&0 & 0 \\
+%\end{bmatrix}, 
+%\Omega_z = \begin{bmatrix}
+%0 &-1 & 0 \\
+%1 &0 & 0 \\
+%0 &0 & 0 \\
+%\end{bmatrix}. 
+% \end{align*}
+ %This generates the rotation, to first order,
+% \[\dot{R}(t,\epsilon) = \frac{1}{\epsilon}[ u \Omega_y + v \Omega_x ] R(t,\epsilon).\]
+%\[R = \exp\{
+ %\[M(t,\epsilon) = R M(0,\epsilon) \]
+%\subsection{Analysis of an ensemble}
+We take further Lie brackets to find new control vector fields:
+%\frac{-1}{\epsilon} \Omega_y \cdot \frac{-1}{\epsilon}\Omega_x \cdot  \frac{1}{\epsilon}\Omega_y \cdot \frac{1}{\epsilon}\Omega_x\\
+\begin{align*}
+\left[ \frac{1}{\epsilon} \Omega_y, \frac{1}{\epsilon} \Omega_x\right] 
+% &= \begin{bmatrix}
+%0 &\epsilon^{-2} & 0 \\
+%-\epsilon^{-2} &0 & 0 \\
+%0&0 & 0 \\
+%\end{bmatrix} \\
+&= -\epsilon^{-2} \Omega_z\\
+ \left[\frac{1}{\epsilon} \Omega_y \left[ \frac{1}{\epsilon} \Omega_y, \frac{1}{\epsilon} \Omega_x\right] \right] &= -\epsilon^{-3}\Omega_x\\
+\left[\frac{1}{\epsilon} \Omega_y \left[\frac{1}{\epsilon} \Omega_y \left[ \frac{1}{\epsilon} \Omega_y, \frac{1}{\epsilon} \Omega_x\right] \right]\right]&= \epsilon^{-4}\Omega_z\\
+&\vdots\\
+&= -1^{k} \epsilon^{-2k+1}\Omega_z \\
+&= -1^{k} \epsilon^{-2k}\Omega_x.
+\end{align*}   % the adjoint
+
+By successive Lie brackets, we can synthesize terms of the form $\{\epsilon^{-2k+1}\Omega_z\}$ and $\{\epsilon^{-2k}\Omega_x\}$.  With these terms as generators, we can approximate the rotation
+\[\exp\left\{\sum_{k=0}^m  a_k \epsilon^{-2k+1}\Omega_z \right\},\]   
+
+%where  the order $m$ and the coefficients $a_k$ can be selected such that
+%\[ \norm{\alpha - \sum_{k=0}^m  a_k \epsilon^{-2k} } \le \mu, \quad \forall \epsilon\in[1-\delta,1+\delta], \]
+%letting us match a desired rotation $\exp\{\alpha \Omega_x\}$ to arbitrary accuracy.
+%A similar rotation can be generated about $\Omega_z$ to any desired accuracy.
+The Stone-Weierstrass theorem~\cite{Royden1988} tells us that given~$\eta > 0$ and a continuous real function
+\[
+\nu(\epsilon) \colon [1-\delta,1+\delta] \to \R,
+\]
+there exists a polynomial function~$\rho(\epsilon)$ such that
+\[
+\abs{\rho(\epsilon) - \nu(\epsilon)} < \eta
+\]
+for all~$\epsilon \in [\underline{\epsilon},\overline{\epsilon}]$.
+An immediate corollary is that
+continuous real functions
+on the domain $[\underline{\epsilon},\overline{\epsilon}]=[1-\delta,1+\delta]$ for some ${0\leq\delta<1}$ can be uniformly approximated either by an odd polynomial or by an even polynomial. (This result would not be true on an arbitrary domain, which is why we restrict ${\delta<1}$.) As a consequence,
+%there exist polynomials
+we can choose $a\in\R^{k}$ so that
+\begin{align*}
+\theta(\epsilon) &\approx \sum_{k=0}^{m} a_{i}\epsilon^{-2k+1} 
+%\beta(\epsilon) &\approx \sum_{i=0}^{k-1} b_{i}\epsilon^{2i+2}
+\end{align*}
+for $\epsilon\in[1-\delta,1+\delta]$, with error vanishing in $k$.
+%Given $\mu>0$, 
+The time complexity of the resulting motion increases with $k$ and with the number of switches required to approximate flows along each
+vector field  $\epsilon^{-2k+1}\Omega_{z}$ and $\epsilon^{-2k}\Omega_{x}$, but remains finite for any given $\mu>0$.
+%We conclude that \eqref{eq:subsystem} is ensemble controllable.
+Our result follows.
+ \endproof
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \section{Controller Design}\label{sec:ControllerDesign}
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%     \begin{figure}%[htb]
+%	\begin{center}
+%	\vspace{4mm}
+%		\begin{overpic}[width=.8\columnwidth]{ballRollPlane}
+%		\put(5,35){$x$}
+%		\put(12,48){$y$}
+%		\put(7,52){$z$}
+%		
+%		\put(22,2){$\frac{\theta-\psi}{2}$}
+%		\put(48,6){$r\pi$}
+%		
+%		\put(90,25){$\theta$}
+%		\put(70,33){$r(\pi-\phi)$}
+%		
+%		\put(42,80){$\theta$}
+%		\put(45,54){$\phi$}
+%		\put(67,80){$\psi$}
+%		
+%		\end{overpic}
+%	\end{center}
+%	\caption{ \label{fig:ballRollPlane} Any orientation in $SO(3)$ can be generated by two straight-line rolls in the plane.  For a ball with radius $r$, 
+%	$R_z(\theta)R_x(\phi)R_z(\psi) =  R_{p}\left(r(\pi-\phi),\theta\right)R_{p}\left(r\pi,(\theta-\psi)/2\right).$}
+%\end{figure}
+ 
+ In this section we provide two methods for approximate open-loop steering of a rolling sphere, the first based on primitives that approximate an in-plane rotation of $\theta$, and the second based on discrete optimization.   The primitive-based method relies on concatenating primitives.  Using fewer primitives reduces the cumulative error. It is well known that three orthogonal rotations span $SO(3)$.  In the following section we show that two straight line rolls in the horizontal plane also span $SO(3)$.  We then construct a motion primitive for spheres with radii $\in [1-\delta,1+\delta]$ that approximates a rotation of $\theta$ about the world $x$-axis by a sequence of orthogonal rolls in the plane.  
+%This primitive may be rotated about the $z$-axis to approximate any rotation in the plane. 
+ This 2D path primitive can then be rotated an angle $\psi$ about the $z$-axis by  \[\begin{bmatrix} \cos(\psi) & -\sin(\psi)\\ \sin(\psi) & \cos(\psi) \end{bmatrix}\] to approximate a rotation about any axis parallel to the plane.
+ Two of these primitives then are sufficient to approximately reorient all spheres with radii $\in [1-\delta,1+\delta]$ by an arbitrary rotation in $SO(3)$.
+ 
+ \subsection{Arbitrary Orientation in $SO(3)$ with Two Straight Rolls}
+ %As Fig.~\ref{fig:ballRollPlane} illustrates,
+  Any rotation $A$ can be described as a rotation about the orthogonal world reference frames $R_z(\theta)R_x(\phi)R_z(\psi)$.  This corresponds to moving the sphere's north pole to latitude $\phi$, longitude $\theta$, then twisting about the original north pole $\psi$:
+ \begin{align*}
+R_z(\theta)&R_x(\phi)R_z(\psi) \\
+&= \left[
+\begin{array}{ccc}
+ c_{\theta} c_{\psi} -c_{\phi} s_{\theta} s_{\psi} & -c_{\phi} c_{\psi} s_{\theta} -c_{\theta} s_{\psi} & s_{\theta} s_{\phi} \\
+ c_{\psi} s_{\theta}+c_{\theta} c_{\phi} s_{\psi} & c_{\theta} c_{\phi} c_{\psi}-s_{\theta} s_{\psi} & -c_{\theta} s_{\phi} \\
+ s_{\phi} s_{\psi} & c_{\psi}s_{\phi} & c_{\phi}
+\end{array}
+\right]
+ \end{align*}
+ 
+Our system is constrained to roll along the plane. Any roll on the plane along a line of length $\ell$  making the angle $\alpha$ with the $x$-axis is given by
+ \begin{align*} R_{p}(\ell,\alpha) &=
+ \left[
+\begin{array}{ccc}
+ c_{\alpha}^2+c_{\ell} s_{\alpha}^2 & (1-c_{\ell}) c_{\alpha} s_{\alpha} & s_{\ell} s_{\alpha} \\
+ (1-c_{\ell}) c_{\alpha} s_{\alpha} & c_{\ell} c_{\alpha}^2+s_{\alpha}^2 & -c_{\alpha} s_{\ell} \\
+ -s_{\ell} s_{\alpha} & c_{\alpha} s_{\ell} & c_{\ell}
+\end{array}
+\right].
+  \end{align*}
+  
+  We can invert any rotation $A = R_z(\theta)R_x(\phi)R_z(\psi)$ with two straight line rolls in the plane of the form $A^{-1} = R_{p}(\pi,\tfrac{1}{2}(\theta-\psi)) \cdot R_{p}(\pi-\phi,\theta)$.  The first movement rolls the sphere so that the original north pole is pointing down, and the second rotation returns the north pole to the original orientation.
+%   \begin{align*} 
+%  &R_{p}(\pi,\tfrac{1}{2}(\theta-\psi))R_{p}(\pi-\phi,\theta) \cdot R_z(\theta)R_x(\phi)R_z(\psi)\\
+%  &=R_{p}(\pi,\tfrac{1}{2}(\theta-\psi))\cdot \left[
+%\begin{array}{ccc}
+% c_{\theta -\psi } & s_{\theta -\psi } & 0 \\
+% s_{\theta -\psi } & -c_{\theta -\psi } & 0 \\
+% 0 & 0 & -1
+%\end{array}
+%\right]\\
+%&=\left[
+%\begin{array}{ccc}
+% 1 & 0 & 0 \\
+% 0 & 1 & 0 \\
+% 0 & 0 & 1
+%\end{array}
+%\right]    
+%\end{align*}
+The first rotation is of length $\ell_1 = \pi - \phi$ with $\abs{\phi} \le \pi$ and the second rotation is of length $\ell_2 =\pi$, so the total path length is  $ \pi \le \ell_1+\ell_2 \le 2\pi$.
+
+ \subsection{Rotating Ensemble Approximately $\theta$ About the $x$-Axis}
+% Without loss of generality, we will assume that $R(0,\epsilon)$ is the identity matrix.
+Consider the motion primitive given by Pryor in \cite{Pryor2007a} of the following form for a non-negative integer~$k$, and freely chosen~$\phi,\beta_{k} \in \R$:
+%\begin{equation}
+%(u_1,u_2)
+%=
+%\begin{cases}
+%(0,-1) & 0 \leq t < \alpha k \\
+%(1,0) & \phi k   \leq t < \phi k + \beta_k/2\\
+%(0,1) & \phi k +\beta_k/2  \leq t < 3\phi k + \beta_k/2\\
+%(1,0) & 3\phi k  +\beta_k/2 \leq t < 3\phi k + \beta_k\\
+%(0,-1) & 3\phi k   +\beta_k \leq t < 4\phi k + \beta_k\\
+%\end{cases}\label{eq:PWSpherePrim}
+%\end{equation}
+\begin{equation}
+(u_1,u_2)
+=
+\begin{cases}
+(0,-1) & \,\,0\,\, \leq t < \phi k \\
+(1,0) & \dotsm   \leq t < \dotsm+  \beta_k/2\\
+(0,1) & \dotsm \leq t < \dotsm+ 2\phi k \\
+(1,0) & \dotsm  \leq t < \dotsm+  \beta_k/2\\
+(0,-1) & \dotsm \leq t < \dotsm+ \phi k \\   
+\end{cases}\label{eq:PWSpherePrim}
+\end{equation}
+Such a primitive is shown in Fig.~\ref{fig:PryorsPrim1}. It is easy to show by direct calculation that the result
+is to achieve
+\begin{align*}
+\Delta x(\epsilon) = \beta_k , \, \Delta y(\epsilon) = 0, \,
+\Delta R(\epsilon)  \approx R_y\left(\beta_k \frac{1}{\epsilon} \cos(\phi k \frac{1}{\epsilon})\right).
+\end{align*}
+
+\begin{figure}%[htb]
+		\begin{center}
+			\begin{overpic}[width=.45\linewidth]{PryorsPrim1}
+			\tiny
+			\put(35,13){$-\phi k$}
+			\put(14,17){$\beta_k/2$}
+			\put(50,28){$2 \phi k$}
+			\put(83,31){$\beta_k/2$}
+			\put(68,35){$-\phi k$}
+			\end{overpic}\hspace{2em}
+			\begin{overpic}[width=.45\linewidth]{PryorsPrim1Subdivided}\end{overpic}\\
+			\vspace{-1em}
+		\end{center}
+		\caption{\label{fig:PryorsPrim1} A sample primitive of the form \eqref{eq:PWSpherePrim}, with $\beta_k = \pi/3$ and $\phi k = \pi/2$. A sphere following this path generates to first order the rotation   $\approx \beta_k \frac{1}{\epsilon}  \cos(\phi k \frac{1}{\epsilon})$.  By subdividing the rotation as illustrated on the right, we can improve arbitrarily this approximation, at the cost of a longer path.}\vspace{-1em}
+\end{figure}       
+
+The approximation $R_y(\beta_k \frac{1}{\epsilon} \cos(\phi k \frac{1}{\epsilon}))$ is created by applying the motion primitive and taking the first-order Taylor series expansion at $\beta_k = 0$.  The approximation degrades for large values of $\beta_k$, but by  repeating the primitive \eqref{eq:PWSpherePrim} $j$ times with parameter $\beta_k' = \beta_k/j$ the approximation improves.  We can achieve arbitrary accuracy in the primitive by increasing $j$.
+Because primitives of this form all rotate in the same direction, we are free to concatenate them. 
+The result after applying $n$ primitives with $k=1,\dotsc,n$ is
+%\begin{align*}
+%\Delta x(\epsilon) &=  \sum_{k=1}^{n} \beta_{k}\\
+%\Delta y(\epsilon) &= 0 \\
+%\Delta R(\epsilon) &\approx R_y\left(\Delta \theta(\epsilon)\right).
+%%\prod_{k=1}^{n} R_y(\beta_k \frac{1}{\epsilon} \cos(\phi k \frac{1}{\epsilon}))\\
+%%&\approx R_y\left(\sum_{k=1}^{n} \beta_k \frac{1}{\epsilon} \cos(\phi k \frac{1}{\epsilon})\right).
+%\end{align*}
+\begin{align*}
+\Delta x(\epsilon) =  \sum_{k=1}^{n} \beta_{k},\quad
+\Delta y(\epsilon) = 0,\quad
+\Delta R(\epsilon) \approx R_y\left(\Delta \theta(\epsilon)\right),
+\end{align*}
+where we define $\Delta \theta(\epsilon) =  \sum_{k=1}^{n} \beta_k \frac{1}{\epsilon} \cos(\phi k \frac{1}{\epsilon})$.
+
+\subsection{Achieving Error of a Particular Order}\label{sec:UnicycleErrorOfParticularOrder}
+
+For convenience, we define
+$\epsilon^{-1} = 1+\delta$,
+and restrict $\abs{\delta}<1$.
+We may express the change in $x$ and $y$ after applying $n+1$ primitives, defined above, as a Taylor series in $\delta$ about $\delta=0$:
+\begin{align*}
+\Delta \theta(\delta) &=
+\Delta \theta(0)
++  \frac{\partial \Delta \theta}{\partial \delta}\biggr\rvert_{\delta=0} \delta
++ \frac{1}{2!} \frac{\partial^{2} \Delta \theta}{\partial \delta^{2}}\biggr\rvert_{\delta=0} \delta^{2}
+%+ \left( \frac{\partial \Delta \theta}{\partial \delta}\biggr\rvert_{\delta=0} \right) \delta %PRETTIER, BUT DID NOT FIT ON LINE
+%+ \frac{1}{2!} \left( \frac{\partial^{2} \Delta \theta}{\partial \delta^{2}}\biggr\rvert_{\delta=0} \right) \delta^{2}
++ \cdots.
+\end{align*}
+This series has the form
+\begin{align*}
+\Delta \theta(\delta) &= \sum_{j=0}^{n-1} s_{j} \delta^{j} + O\left(\delta^{n}\right).
+\end{align*}
+Note that this expression is linear in $s_{j}$, and that each coefficient $s_{j}$ is linear in $\beta_{1},\dotsc,\beta_{n}$.
+Define
+\[s = \begin{bmatrix} s_{0} &\ldots & s_{n-1} \end{bmatrix}^{\top}, \quad \beta = \begin{bmatrix} \beta_{1} & \ldots & \beta_{n} \end{bmatrix}^{\top},\]
+%\[
+%s = \begin{bmatrix} s_{0} \\ \vdots \\ s_{n-1} \end{bmatrix},
+%\quad
+%\beta = \begin{bmatrix} \beta_{1} \\ \vdots \\ \beta_{n} \end{bmatrix},
+%\]
+\begin{align}
+\label{linearequations}
+\text{so we can write } s &= S\beta
+\end{align}
+for some matrix  $S$ that does not depend explicitly on $\delta$.
+To achieve $\Delta \theta=1$ with error that is of order $n$ in $\delta$, we require only that $s = [1, 0,  \ldots, 0 ]^{\top}$.
+
+The achievable error decreases exponentially in the number $n+1$ of primitives used.
+We need to solve a system of $n$ linear equations to achieve $n$th-order error.
+As a consequence, exactly $n$ primitives are required to achieve $n$th-order error, for any $n$.
+There is an implicit assumption here that  $S$ is nonsingular (and, in practice, well conditioned), but this assumption will hold for ``almost all'' choices of $\phi$.
+       
+%For certain choices of $\phi$, the matrix $S$ has a very simple form.
+%For example, taking $\phi=\pi/2$ and assuming $n=4$, we find that
+%\[
+%S =
+%\begin{bmatrix}
+%1 & 0 & -1 & 0 \\
+%1 & -\pi/2 & -1 & 3\pi/2 \\
+%0 & -\pi/2 & \pi^{2}/2 & 3\pi/2 \\
+%0 & \pi^{3}/48 & \pi^{2}/16 & -27\pi^{3}/48
+%\end{bmatrix}
+%\]
+%In this case, the linear equation~\eqref{linearequations} can be solved exactly to produce
+%\[
+%\beta =
+%\begin{bmatrix}
+%1+(2/\pi^{2}) \\
+%3\left(8+3\pi^{2}\right)/\left(4\pi^{3}\right) \\
+%2/\pi^{2} \\
+%\left(24+\pi^{2}\right)/\left(12 \pi^{3}\right)
+%\end{bmatrix}
+%\]
+By linearity, it is clear that the scaled parameters $\beta \Delta \theta$  will reach arbitrary $\Delta \theta$.
+We can use this method to generate paths that satisfy arbitrary accuracy bounds, but the required paths may be very long.  
+  Fig.~\ref{fig:PryorPaths} depicts paths generated to  turn $\pi$ about the $x$-axis with a threshold of $\pi/6$.
+ In the following section we use optimal control to generate shorter paths.
+  
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Optimal Control with Piecewise-Constant Inputs} \label{subsec:OptimalControl}%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+We want to steer an ensemble of spheres of radius $r\epsilon$ with primitives that consist of alternating rotations along the positive $x$- and $y$-axes to implement a desired rotation $R_{goal}$.  The composite rotation $R(\Theta,\epsilon)$ is 
+\begin{align} \label{eqn:posRotations}
+R(\Theta,\epsilon) &= \prod_{i = 1}^{n}{R_x\!\left(\frac{\theta_{2i-1}}{r \epsilon}\right) R_y\!\left(\frac{\theta_{2i}}{r \epsilon} \right)}\\
+\text{for }\Theta &= \left[\theta_1,\ldots,\theta_{2n}\right], \quad \theta_i \ge 0, \nonumber
+\end{align}
+where $R_x(\alpha)$ is a rotation of $\alpha$ about the $x$-axis and $R_y(\beta)$ is a rotation of $\beta$ about the $y$-axis. 
+The problem is to find $\Theta$ such that the integral
+\begin{align}
+\int_{1-\delta}^{1+\delta}\operatorname{dist}\left(R\left(\Theta,\epsilon\right)), R_{goal} \right) d\epsilon\label{eqn:minSO3}
+\end{align}
+is minimized.  In our discrete optimization routine, we replace the integral in \eqref{eqn:minSO3} with a summation,  and use gradient descent on $\Theta$ from multiple random seed values $\Theta_{init}$  to search for local minima in 
+\begin{align}
+\sum_{k = 0}^{n-1}\operatorname{dist}\!\left(R\left(\Theta,1-\delta +\frac{2\delta k}{ n-1}\right), R_{goal} \right) \label{eqn:minDiscreteSO3}
+\end{align}
+For the paths generated in Fig.~\ref{fig:optimPaths}, we used 500 random seed values and $n = 15$.  This optimization routine provided adequate results, but future work should take advantage of modern optimization methods.
+
+
+
+
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \section{Hardware Implementation}\label{sec:HardwareImplementation}
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \subsection{System Design}
+   
+    The prototype spherical parts handler is shown in Fig.~\ref{fig:CNCtable}.  
+A grid array of $n$ magnets attached to a CNC $xy$-table can reorient $n$ spheres by rolling in the plane when a nonmoving substrate is placed between the spheres and magnet array.  A table-top CNC mill table is used as an $xy$ planar manipulator to slide a tray in the plane.  The tray is manufactured of MDF and is bolted to the mill.  Fifteen holes are drilled into the surface. Each holds a $5\times8$ mm diameter cylindrical neodymium rare-earth magnet flush to the surface of the tray. The $xy$-table provides a $230\times125$ mm workspace. By securing a stationary,  0.15 mm thick cardboard sheet on top of the tray, we have a manipulator that can roll variable-sized ferro-magnetic spheres in the plane with minimal slip. Six spheres with diameters \{16, 18, 19, 22, 24, 25.4\} mm  were used to test manipulation algorithms in this paper. 
+
+ Our prototype was inspired by the kinetic sculptures of Bruce Shapiro and Jean-Pierre H{\'e}bert, which draw paths in sand using a rolling steel ball actuated by a hidden servo controlled magnet \cite{Shapiro1998,Hebert1999}.
+
+
+
+    
+
+\subsection{Measuring System Position}
+   Tracking the orientation of a sphere is a common problem, with approaches ranging from 
+     using colored circles painted at the vertices of Platonic solids \cite{Lynch2001},
+   painting a fiducial pattern on a sphere and then comparing camera images to a library of generated rotated images \cite{Robert-Zimmermann2011}, to tracking sphere orientation using dots precisely applied to the ball  \cite{Bradley2004}.  Each of these approaches requires accurate marker application, which increases in difficulty as the sphere shrinks in size.  An alternate approach applies fiducial stickers to the sphere, learns their positions during a training phase, and then tracks these fiducials \cite{Beeler2010}.  We adapted this method to use hand-drawn fiducials because stickers would affect the effective sphere diameter.  We then estimated the sphere position by tracking five points in each image using Horn's method \cite{Horn1987}, producing at frame $k$ the rotation matrix $R_k$.  We used `$\top$' shaped fidicials. % we used are visible in Fig.~\ref{fig:ResultsOptimRollPicsl}.
+
+
+   
+
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Results}\label{subsec:Results}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\subsubsection{Testing Movement Primitives}
+	
+We compared motion primitives designed to rotate approximately $\pi$ about the world $y$-axis.  All tests were performed with six spheres ranging in size $\pm$25\% of nominal diameter.  We compare primitives based on 1,2,3 and 4$^{th}$-order Taylor series with a primitive designed by discrete optimization over a 10 segment path.  
+     These movements are primitives because they can be concatenated to approximate any desired rotation.  Note first that due to symmetry the rotation $R_y(\pi)$ is equivalent to rotating about any axis parallel to the plane $\pi$.  Secondly, the Taylor series approximations can be linearly scaled in the $x$-axis direction to approximate any rotation $\beta$ about the world $y$-axis.
+     
+     The  paths for the Taylor series and the discrete optimization primitives are shown in Figs.~\ref{fig:PryorPaths} and \ref{fig:optimPaths}.  These primitives were tested by measuring the starting and ending orientation for 10 iterations of the motion for the Taylor series primitives and 25 times for the discrete optimization path.    The errors recorded for these tests are shown in Fig.~\ref{fig:OptimVsPryor} for all six sphere sizes.  % Fig.~\ref{fig:ResultsOptimRollPicsl} shows the initial and final orientations of each sphere for the discrete optimization path.
+
+For all spheres, the discrete optimization-based path performed best.  The Taylor series-based paths increased in accuracy as the order increased from 1$^{st}$ to $3^{rd}$ order, but  the 4$^{th}$ order path decreased in accuracy.    The accuracy gained by the higher-order series approximation is cancelled by the process-induced drift shown in Fig.~\ref{fig:substrateDesign}.
+
+
+    	   \begin{figure}%[htb]
+	\begin{center} %TODO: change color for theoretical
+		\begin{overpic}[width=.8\columnwidth]{TheoryExpRadfor10Mvs}\end{overpic}
+		\vspace{-1.5em}
+	\end{center}
+	\caption{ \label{fig:OptimVsTheoretical} Accuracy test for six spheres with diameters \{16, 18, 19, 22, 24, 25.4\} mm.  The spheres were commanded to follow the 10-segment path in Fig.~\ref{fig:optimPaths} designed by discrete optimization and the test was repeated 25 times.  The yellow line is the theoretical error with no process noise.  The red line shows the mean errors for each sphere tested $\pm$ one std.
+	}\vspace{-.5em}
+	\end{figure}
+
+
+
+
+
+
+\section{Conclusion}\label{sec:Conclusion}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+We began with the problem of manipulating a plate-ball system despite model perturbation that scales the ball diameter by an unknown but bounded constant. We modeled the sphere as an ensemble control system, showed that this system is ensemble controllable, and derived an approximate steering algorithm to bring the sphere to within an arbitrarily small neighborhood of any given orientation in $SO(3)$. We applied our work to spheres with unknown but bounded diameters, and validated our approach with hardware experiments that simultaneously reoriented multiple spheres.  
+
+Our solutions consisted of open-loop paths that could be precomputed.  We demonstrated that the hardware system has low noise that was $\approx$0.04\% of commanded inputs.  This noise introduces a drift term to the state evolution that cannot be countered by open-loop control.  In many application environments, it is practical to add a camera system to sense the ball orientations.  In this paper we showed that a continuum of different-sized spheres are approximately controllable by a shared input.  Thus, a finite number of different-sized spheres is approximately controllable by a shared input.  Using methods similar to \cite{Beauchard2010a} with the Bloch system,  future work will apply feedback techniques to our plate-ball system. 
+
+Additionally, the classical plate-ball system is steerable in $\R^2\times SO(3)$.  Our controllability result of Section \ref{sec:Controllability} used bracket motion to reorient the spheres.  These bracket motions are rotations in a square pattern on the plane, and leave the sphere $x$ and $y$ position unchanged.  Therefore we can steer from a given $(x_{start},y_{start},\Rstart)$ to a desired $(x_{goal},y_{goal},\Rgoal)\in [\R^2\times SO(3)]$.  We apply a straight line rotation to move the ensemble of spheres to $x_{goal},y_{goal}$.  This move incurs some rotation $\phi(\epsilon)$.   We finish by performing a rotation in place that approximates $\Rgoal \phi(\epsilon)^{\top} \Rstart^{\top}$. 
+
+Finally, an important contribution of this paper was a new experimental platform, so we provided a characterization of the system reliability and described the system so it can be replicated.  The magnetic actuation makes the mechanism easy to implement, allows an unobstructed view of the ball on the plane, and enables simultaneous manipulation of multiple balls with different radii.
+
+\section{Acknowledgements}
+This work was supported by the National Science Foundation under CPS-0931871 and CMMI-0956362.
+
+
+%%%% BIBLIOGRAPHY %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  \IEEEtriggeratref{19}
+
+
+\bibliographystyle{IEEEtran}
+\bibliography{IEEEabrv,../aaronrefs}
+\end{document}
+
+
+
+
+
+
+
