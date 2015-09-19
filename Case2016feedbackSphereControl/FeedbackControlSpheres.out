@@ -3,26 +3,28 @@
 \BOOKMARK [1][-]{section.3}{Theory}{}% 3
 \BOOKMARK [2][-]{subsection.3.1}{Review on Quaternions}{section.3}% 4
 \BOOKMARK [2][-]{subsection.3.2}{The plate-ball system}{section.3}% 5
-\BOOKMARK [1][-]{section.4}{Closed Loop Control}{}% 6
-\BOOKMARK [2][-]{subsection.4.1}{A convenient fictitious input}{section.4}% 7
-\BOOKMARK [2][-]{subsection.4.2}{Steering a real system}{section.4}% 8
-\BOOKMARK [1][-]{section.5}{Related Work}{}% 9
-\BOOKMARK [2][-]{subsection.5.1}{Sensorless Part Orientation}{section.5}% 10
-\BOOKMARK [2][-]{subsection.5.2}{Sphere Manipulation}{section.5}% 11
-\BOOKMARK [2][-]{subsection.5.3}{Ensemble Control}{section.5}% 12
-\BOOKMARK [1][-]{section.6}{Problem Statement}{}% 13
-\BOOKMARK [2][-]{subsection.6.1}{One Sphere}{section.6}% 14
-\BOOKMARK [2][-]{subsection.6.2}{Ensemble of Spheres}{section.6}% 15
-\BOOKMARK [1][-]{section.7}{Controllability}{}% 16
-\BOOKMARK [1][-]{section.8}{Controller Design}{}% 17
-\BOOKMARK [2][-]{subsection.8.1}{Arbitrary Orientation in SO\(3\) with Two Straight Rolls}{section.8}% 18
-\BOOKMARK [2][-]{subsection.8.2}{Rotating Ensemble Approximately \040About the x-Axis}{section.8}% 19
-\BOOKMARK [2][-]{subsection.8.3}{Achieving Error of a Particular Order}{section.8}% 20
-\BOOKMARK [2][-]{subsection.8.4}{Optimal Control with Piecewise-Constant Inputs}{section.8}% 21
-\BOOKMARK [1][-]{section.9}{Hardware Implementation}{}% 22
-\BOOKMARK [2][-]{subsection.9.1}{System Design}{section.9}% 23
-\BOOKMARK [2][-]{subsection.9.2}{Measuring System Position}{section.9}% 24
-\BOOKMARK [2][-]{subsection.9.3}{Results}{section.9}% 25
-\BOOKMARK [3][-]{subsubsection.9.3.1}{Testing Movement Primitives}{subsection.9.3}% 26
-\BOOKMARK [1][-]{section.10}{Conclusion}{}% 27
-\BOOKMARK [1][-]{section.11}{Acknowledgements}{}% 28
+\BOOKMARK [2][-]{subsection.3.3}{Example: rolling a sphere around a circular arc to align sphere z with world z axis}{section.3}% 6
+\BOOKMARK [1][-]{section.4}{Closed Loop Control}{}% 7
+\BOOKMARK [2][-]{subsection.4.1}{A convenient fictitious input}{section.4}% 8
+\BOOKMARK [2][-]{subsection.4.2}{Steering a real system}{section.4}% 9
+\BOOKMARK [1][-]{section.5}{Related Work}{}% 10
+\BOOKMARK [2][-]{subsection.5.1}{Sensorless Part Orientation}{section.5}% 11
+\BOOKMARK [2][-]{subsection.5.2}{Sphere Manipulation}{section.5}% 12
+\BOOKMARK [2][-]{subsection.5.3}{Ensemble Control}{section.5}% 13
+\BOOKMARK [1][-]{section.6}{Problem Statement}{}% 14
+\BOOKMARK [2][-]{subsection.6.1}{One Sphere}{section.6}% 15
+\BOOKMARK [2][-]{subsection.6.2}{Ensemble of Spheres}{section.6}% 16
+\BOOKMARK [1][-]{section.7}{Controllability}{}% 17
+\BOOKMARK [1][-]{section.8}{Controller Design}{}% 18
+\BOOKMARK [2][-]{subsection.8.1}{Arbitrary Orientation in SO\(3\) with Two Straight Rolls}{section.8}% 19
+\BOOKMARK [2][-]{subsection.8.2}{Rotating Ensemble Approximately \040About the x-Axis}{section.8}% 20
+\BOOKMARK [2][-]{subsection.8.3}{Achieving Error of a Particular Order}{section.8}% 21
+\BOOKMARK [2][-]{subsection.8.4}{Optimal Control with Piecewise-Constant Inputs}{section.8}% 22
+\BOOKMARK [1][-]{section.9}{Hardware Implementation}{}% 23
+\BOOKMARK [2][-]{subsection.9.1}{System Design}{section.9}% 24
+\BOOKMARK [2][-]{subsection.9.2}{Measuring System Position}{section.9}% 25
+\BOOKMARK [2][-]{subsection.9.3}{Results}{section.9}% 26
+\BOOKMARK [3][-]{subsubsection.9.3.1}{Testing Movement Primitives}{subsection.9.3}% 27
+\BOOKMARK [1][-]{section.10}{Conclusion}{}% 28
+\BOOKMARK [1][-]{section.11}{Acknowledgements}{}% 29
+\BOOKMARK [1][-]{section*.1}{References}{}% 30
