@@ -151,7 +151,7 @@ We present an algorithm for approximate steering and validate the algorithm with
 
 In previous work \todo{ [[insert references]] }we proved that a plate-ball system can be used in open-loop (no feedback) to steer a ball of unknown radius from an initial orientation to a desired orientation.  The work relied on a proof of controllability inspired by work in ensemble control [[insert references]].
 
-In this work, we show how this same proof of controllability can be used to derive feedback controllers that can simultaneously roll multiple spheres from arbitrary initial orientations to goal locations using a sphered input provided by a single moving plate system.
+In this work, we show how this same proof of controllability can be used to derive feedback controllers that can simultaneously roll multiple spheres from arbitrary initial orientations to goal locations using a global input provided by a single moving plate system.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -173,35 +173,42 @@ This section describes our plate-ball system, the equations of motion, the error
 
 \subsection{Review on Quaternions}
 
-A unit quaternion can represent either orientation or a rotation.  The format of a quaternion is
+A unit quaternion can represent either orientation or a rotation.  The general format of a quaternion is
 \begin{align}
-\psi_i = \cos( \theta) \label{eq:Quaternion}
+{\bf q} = a+u_x{\bf i}+u_y{\bf j}+u_z{\bf k}\label{eq:Quaternion}
 \end{align}
-where  \todo{put constraints}
-
-
+where those numbers $a,u_x,u_y,u_z$ are all real numbers, and the part $a$ is defined as the scalar part of the quaternion and $u_x{\bf i}+u_y{\bf j}+u_z{\bf k}$ is defined as the vector part of the quaternion, which can denote an arbitrary vector in the $R^3$ space. For the purpose to using quaternions to express the rotation in $R^3$ space, all quaternions we use must be unit quaternions. Therefore, \eqref{eq:Quaternion} can represent a rotation only if $\sqrt{a^2+u_x^2+u_y^2+u_z^2}=1$.
+similar to Euler Formula of complex numbers, the Euler Formula also applies to quaternions:
+\begin{align}
+e^{\frac{\theta}{2} (u_x{\bf i}+u_y{\bf j}+u_z{\bf k})}=\cos(\frac{\theta}{2})+(u_x{\bf i}+u_y{\bf j}+u_z{\bf k})\sin(\frac{\theta}{2})\label{eq:quaternionsEuler}
+\end{align}
+The vector part of a unit quaternion represents the rotation axis and $\theta$ is the rotation angle.
 A rotation about the world $x$-axis by angle $\theta$ is
 \begin{align}
- {\bf q}_x(\theta) = \cos( \theta) \label{eq:QuaternionXaxis}
+ {\bf q}_x(\theta) = \cos( \frac{\theta}{2})+{\bf i}\sin(\frac{\theta}{2}) \label{eq:QuaternionXaxis}
 \end{align}
 
 Similarly, a rotation about the world $y$-axis by angle $\theta$ is
 \begin{align}
- {\bf q}_y(\theta) = \cos( \theta) \label{eq:QuaternionYaxis}
+ {\bf q}_y(\theta) = \cos( \frac{\theta}{2})+{\bf j}\sin(\frac{\theta}{2}) \label{eq:QuaternionYaxis}
 \end{align}
 
 A rotation about the world $z$-axis is
 \begin{align}
-\psi_i = \cos( \theta) \label{eq:QuaternionZaxis}
+{\bf q}_z(\theta) = \cos( \frac{\theta}{2})+{\bf k}\sin(\frac{\theta}{2}) \label{eq:QuaternionZaxis}
 \end{align}
 
-A rotation about the unit axis $[u_x,u_y,u_z]^top$ is
+A rotation about the unit axis $[v_x,v_y,v_z]^t$ is
 \begin{align}
-\psi_i = \cos( \theta) \label{eq:QuaternionUnitaxis}
+{\bf q}_{Arb}(\theta) = \cos( \frac{\theta}{2})+(v_x{\bf i}+v_y{\bf j}+v_z{\bf k})\sin(\frac{\theta}{2}) \label{eq:QuaternionUnitaxis}
 \end{align}
-
 
 Composing rotations with quaternions is represented by multiplication.  A composite rotation formed by rotating ${\bf q}_1$ followed by  ${\bf q}_2$  is 
+\begin{align}
+{\bf P}_1={\bf q}_2{\bf q}_1{\bf P}_0{\bf q}_1^*{\bf q}_2^*
+\end{align}
+Where ${\bf P}_1$ is the rotated vector or matrix and the ${\bf P}_0$ is the vector or matrix before rotation; ${\bf q}_1^*$ and ${\bf q}_2^*$ represent conjugate quaternions and the product happen between quaternions are all Hamilton Product. 
+Note that traditional rotation matrices describe rotation using 9 numbers subscribed to 6 constraints whereas the quaternions describe it using 4 numbers subscribed to 1 constraints and can circumvent gimbal-lock and numerical instability. Therefore, in our algorithm simulation, we adopt quaternion rotation.
 
 
 
@@ -223,19 +230,23 @@ In this paper we prove this system, which applies the same control to each spher
 
 
 
-A plate ball system is composed of ...
+A plate ball system is composed of an array of $n$ metal spheres separated from an array of $n$ magnets by a stationary sheet of cardboard.  The magnet array is attached to an $xy$ CNC table, and the spheres roll without slipping above their respective magnets.
 
 %For Yu Huang:   $x$   x   \emph{x}  {\bf x }
 
 
-Equations for one sphere on a plate-ball system.  Consider one ball with radius $r_i$.  The plateball system can apply two inputs, a movement in the $x$ irection, and a movement in the $y$ direction
+Equations for one sphere on a plate-ball system.  Consider one ball with radius $r_i$ whose Z-axis orientation after k steps`s rotation is ${\bf Z}_{i,k}$.  The plate-ball system can apply two inputs, a rolling movement in the $x$ direction at the length of $l_{x,k+1}$:
+\begin{align}
+{\bf Z}_{i,k+1}={\bf q}_y(\frac{l_{x,k+1}}{r_i}){\bf Z}_{i,k}{\bf q}_y(\frac{l_{x,k+1}}{r_i})^{-1} \label{eq:PlateBallXrotation}
+\end{align}
+ and a rolling movement in the $y$ direction at the length of $l_{y,k+1}$:
 
 
 \begin{align}
-\psi_i = \cos( \theta) \label{eq:PlateBallXandYrotations}
+{\bf Z}_{i,k+1}={\bf q}_x(\frac{l_{y,k+1}}{r_i}){\bf Z}_{i,k}{\bf q}_x(\frac{l_{y,k+1}}{r_i})^{-1} \label{eq:PlateBallYrotations}
 \end{align}
 
-this sphere cannot be rotated directly around the world $z$-axis.  However, we can approximate $z$-rotation by Lie bracket motion.
+Obviously, this sphere cannot be rotated directly around the world $z$-axis.  However, we can approximate $z$-rotation by Lie bracket motion.
 
 We will proceed by showing how to construct $R_z\!\big(\hat\theta(\epsilon)\big)$.
 For small time $dt$, by rolling clockwise in a small square pattern on the plane, we can generate movement about the $z$-axis.
@@ -249,7 +260,7 @@ For small time $dt$, by rolling clockwise in a small square pattern on the plane
 This Lie bracket movement generates the previously restricted motion about the $z$-axis.	    
 
 An alternate method to approximate motion around the $z$-axis is to roll a sphere  along a circular path starting at the sphere contact point.
-Consider a sphere with radius $r_i$ centered at $(0,0)$ that rolls around a circular path of radius $r_c$ centered at $r_c (\cos(\alpha_c), \sin(\alpha_c))$.  The resulting motion can be decomposed into a rotation about an axis from $[ r_c \cos(\alpha_c), r_c\sin(\alpha_c),0]^\top$ to $[ 0,0,r_i]^\top$, followed by a rotation about the world $z$-axis of...
+Consider a sphere with radius $r_i$ centered at $(0,0,0)$ that rolls around a circular path of radius $r_c$ centered at the point $ (r_c\cos(\alpha_c), r_c\sin(\alpha_c),0)$.  The resulting motion can be decomposed into a rotation about an axis from $[ r_c \cos(\alpha_c), r_c\sin(\alpha_c),0]^\top$ to $[ 0,0,r_i]^\top$, followed by a rotation about the world $z$-axis of...
 
 \begin{align}
 \psi_i = \cos( \theta) \label{eq:RotatingAboutACircle}
