@@ -5,6 +5,8 @@
 \IEEEoverridecommandlockouts
 \usepackage{calc}
 \usepackage{url}
+\usepackage{amsmath}
+\usepackage{relsize}
 \usepackage{graphicx}
 \usepackage{amsmath,amssymb}
 \usepackage{color}
@@ -260,18 +262,20 @@ For small time $dt$, by rolling clockwise in a small square pattern on the plane
 This Lie bracket movement generates the previously restricted motion about the $z$-axis.	    
 
 An alternate method to approximate motion around the $z$-axis is to roll a sphere  along a circular path starting at the sphere contact point.
-Consider a sphere with radius $r_i$ centered at $(0,0,0)$ that rolls around a circular path of radius $r_c$ centered at the point $ (r_c\cos(\alpha_c), r_c\sin(\alpha_c),0)$.  The resulting motion can be decomposed into a rotation about an axis from $[ r_c \cos(\alpha_c), r_c\sin(\alpha_c),0]^\top$ to $[ 0,0,r_i]^\top$, followed by a rotation about the world $z$-axis of...
+Consider a sphere with radius $r_i$ centered at $(0,0,0)$ that rolls around a circular path of radius $r_c$ centered at the point $ (r_c\cos(\alpha_c), r_c\sin(\alpha_c),0)$.  The resulting motion can be decomposed into a rotation about an axis from $[ r_c \cos(\alpha_c), r_c\sin(\alpha_c),0]^\top$ to $[ 0,0,r_i]^\top$, followed by a rotation about the world $z$-axis of the corresponding radius angle of the arc that the ball rolled along.
+If the sphere only rolls along an arc of length $\ell_c$, the resulting rotation:
+
+1.rotate about the axis $[ -r_c \cos(\alpha_c), -r_c\sin(\alpha_c),r_i]^\top$:
 
 \begin{align}
-\psi_i = \cos( \theta) \label{eq:RotatingAboutACircle}
+{\bf q}_1(r_c, \alpha_c, \ell_c, r_i)   = \cos( -\frac{\theta_c}{2})+ \frac{\sin({-\frac{\theta_c}{2}})}{\sqrt{r_c^2+r_i^2}}(-r_c\cos(\alpha_c){\bf i}-r_c\sin(\alpha_c){\bf j}+r_i{\bf k}) \label{eq:RotatingAboutACircleArc1}
 \end{align}
+where $\theta_c=\frac{\ell_c\sqrt{r_i^2+r_c^2}}{r_ir_c}$.
 
-If the sphere only rolls along an arc of length $\ell_c$, the resulting rotation
-
+2.rotate about the world z-axis:
 \begin{align}
-{\bf q}(r_c, \alpha_c, \ell_c, r_i)   = \cos( \theta) \label{eq:RotatingAboutACircleArc}
+{\bf q}_2(r_c, \alpha_c, \ell_c, r_i)=\cos(\frac{\ell_c}{2r_c})+\sin(\frac{\ell_c}{2r_c}){\bf k}\label{eq:RotatingAboutACircleArc2}
 \end{align}
-
 
 For our purposes in this paper we want to align the $z$-axis of the sphere with the world $z$ axis.  The deviation of one sphere form the world  $z$ axis can be described in terms of $theta_i$ and $\psi_i$  
 
@@ -279,14 +283,16 @@ For our purposes in this paper we want to align the $z$-axis of the sphere with 
  The error metric for one sphere is derived by
  
 \begin{align}
-\psi_i = \cos( \theta) \label{eq:errorForOneSphere}
+\psi_{i,k} = \arccos([0,0,1]{\bf Z}_{i,k}) \label{eq:errorForOneSphere}
 \end{align}
 
+Note that here the orientation of z axis can be denoted by traditional unit vector form or the quaternion form.
 
- the error metric for multiple spheres is given by sum of squared error
+ the error metric for n spheres is given by sum of squared error
  
 \begin{align}
-\psi_i = \cos( \theta) \label{eq:errorForManySpheres}\end{align}
+\psi_{error,k} = \sqrt{\frac{\mathlarger{\sum}_{i=1}^{n}\psi_{i,k}^2}{n}} \label{eq:errorForManySpheres}
+\end{align}
 
 
 
@@ -332,13 +338,13 @@ We can continue until the system is at our goal state.
  
 however, we cannot rotate about the z-axis.
 
-We can roll the system along circular arcs, as shown by Eq. \eqref{eq:RotatingAboutACircleArc}
+We can roll the system along circular arcs, as shown by Eq. \eqref{eq:RotatingAboutACircleArc1} and Eq.\eqref{eq:RotatingAboutACircleArc2}
 
 
 Our problem is then to find $(r_c, \alpha_c, \ell_c, r_i)  $ that reduces \eqref{eq:errorForManySpheres}.  We then repeat this process until the error reduces to an acceptable level, or time runs out
 
 
-Some plots of this.
+\todo{Some plots of this.}
 
 
 Long description of your optimization function.
