@@ -239,13 +239,13 @@ A plate ball system is composed of an array of $n$ metal spheres separated from 
 
 Equations for one sphere on a plate-ball system.  Consider one ball with radius $r_i$ whose Z-axis orientation after k steps`s rotation is ${\bf Z}_{i,k}$.  The plate-ball system can apply two inputs, a rolling movement in the $x$ direction at the length of $l_{x,k+1}$:
 \begin{align}
-{\bf Z}_{i,k+1}={\bf q}_y(\frac{l_{x,k+1}}{r_i}){\bf Z}_{i,k}{\bf q}_y(\frac{l_{x,k+1}}{r_i})^{-1} \label{eq:PlateBallXrotation}
+{\bf Z}_{i,k+1}={\bf q}_y(\frac{l_{x,k+1}}{r_i}){\bf Z}_{i,k}{\bf q}_y(\frac{l_{x,k+1}}{r_i})^* \label{eq:PlateBallXrotation}
 \end{align}
  and a rolling movement in the $y$ direction at the length of $l_{y,k+1}$:
 
 
 \begin{align}
-{\bf Z}_{i,k+1}={\bf q}_x(\frac{l_{y,k+1}}{r_i}){\bf Z}_{i,k}{\bf q}_x(\frac{l_{y,k+1}}{r_i})^{-1} \label{eq:PlateBallYrotations}
+{\bf Z}_{i,k+1}={\bf q}_x(\frac{l_{y,k+1}}{r_i}){\bf Z}_{i,k}{\bf q}_x(\frac{l_{y,k+1}}{r_i})^* \label{eq:PlateBallYrotations}
 \end{align}
 
 Obviously, this sphere cannot be rotated directly around the world $z$-axis.  However, we can approximate $z$-rotation by Lie bracket motion.
@@ -258,7 +258,7 @@ For small time $dt$, by rolling clockwise in a small square pattern on the plane
 	\quad \cdot		     \exp\{\frac{1}{\epsilon} \sqrt{dt} \Omega_y\}  
 		      \exp\{\frac{1}{\epsilon} \sqrt{dt} \Omega_x\} &\approx  I + \epsilon^{-2} dt \Omega_z\\
 	  &=  \exp\{ \epsilon^{-2} dt  \Omega_z\}
-	  \end{align*}
+\end{align*}
 This Lie bracket movement generates the previously restricted motion about the $z$-axis.	    
 
 An alternate method to approximate motion around the $z$-axis is to roll a sphere  along a circular path starting at the sphere contact point.
@@ -269,13 +269,14 @@ If the sphere only rolls along an arc of length $\ell_c$, the resulting rotation
 
 \begin{align}
 {\bf q}_1(r_c, \alpha_c, \ell_c, r_i)   = \cos( -\frac{\theta_c}{2})+ \frac{\sin({-\frac{\theta_c}{2}})}{\sqrt{r_c^2+r_i^2}}(-r_c\cos(\alpha_c){\bf i}-r_c\sin(\alpha_c){\bf j}+r_i{\bf k}) \label{eq:RotatingAboutACircleArc1}
-\end{align}
+       \end{align}
 where $\theta_c=\frac{\ell_c\sqrt{r_i^2+r_c^2}}{r_ir_c}$.
 
 2.rotate about the world z-axis:
 \begin{align}
 {\bf q}_2(r_c, \alpha_c, \ell_c, r_i)=\cos(\frac{\ell_c}{2r_c})+\sin(\frac{\ell_c}{2r_c}){\bf k}\label{eq:RotatingAboutACircleArc2}
 \end{align}
+
 
 For our purposes in this paper we want to align the $z$-axis of the sphere with the world $z$ axis.  The deviation of one sphere form the world  $z$ axis can be described in terms of $theta_i$ and $\psi_i$  
 
@@ -311,6 +312,29 @@ To better illustrate the condition, let`s start with a generic example that is f
 
 While it is feasible to do the gradient descent method regardless of the actual initial orientation of ball and finally decrease its error to a marginal range. Besides, it is also obvious that we can achieve the same goal by doing the line motion along $x$ axis and $y$ axis for only 2 steps. However, we will demonstrate in the following that we can accomplish the same effect by doing the circular motion constrained by practical conditions without make it an optimization problem contain 3 variables.
 
+Consider a situation in \ref{fig:OneBallLolliDemo}, we can calculate the maximum $\psi$ error that can be fixed:
+
+\begin{align}
+\psi_{error,max}=\pi-2 \arctan(\frac{r_s}{r_c})
+\label{eq:MaxErrorFixed}
+\end{align}
+where $r_s$ denotes the radius of the sphere and $r_c$ denotes the radius of the circle. Accordingly, the arc that will be rolled through is $\frac{r_cr_s\pi}{\sqrt{r_c^2+r_s^2}}$. Note that it seems that we can fix any error smaller than $2\pi$, however, in practical circumstances there will be a maximum of $r_s$ which is constrained by the workspace.
+
+We further take the advantage of the symmetric shape of balls and obtain a more generic way to do this circular motion with the ball`s initial orientation $[x,y,z]^T$: ${\bf q}_1(r_c, \arctan(\frac{y}{x}), \frac{r_cr_s\pi}{\sqrt{r_c^2+r_s^2}}, r_i)$ and ${\bf q}_2(r_c, \arctan(\frac{y}{x}), \frac{r_cr_s\pi}{\sqrt{r_c^2+r_s^2}}, r_i)$.
+
+
+
+
+    \begin{figure}%[htb]
+	\begin{center}
+	\begin{overpic}[width=.9\columnwidth]{OneBallLolliDemo}
+	\end{overpic}
+	\end{center}
+	\vspace{-1em}
+	\caption{ \label{fig:OneBallLolliDemo} In this situation, the ball is located on the origin, the center of the circle is $(0,-r_c,0)$
+}\vspace{-1em}
+\end{figure}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -318,7 +342,19 @@ While it is feasible to do the gradient descent method regardless of the actual 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 We start with a convenient mathematical fiction, and assume an input exists that rotates all spheres about the world $z$ axis at the constant rate of $1/r_i$.  
-Show that under this input the error metric \eqref{eq:errorForManySpheres} does not change.
+We will use quaternion rotation to show that under this input the error metric \eqref{eq:errorForManySpheres} does not change. Let $\theta$ be a random angle. Then use it to rotate the $Z$ which is $z$ axis of the ball around the world $z$ axis:
+\begin{align}
+{\bf q_z}(\frac{\theta}{2}){\bf Z}_0{\bf q_z}(\frac{\theta}{2})^*=(\cos(\frac{\theta}{2})+\sin(\frac{\theta}{2}){\bf k})(x{\bf i}+y{\bf j}+z{\bf k})(\cos(\frac{\theta}{2})-\sin(\frac{\theta}{2}){\bf k})
+\end{align}
+
+then we get
+
+\begin{align}
+Z_1=(x\cos(\theta)-y\sin(\theta)){\bf i}+(y\cos(\theta)+x\sin(\theta){\bf j}+z{\bf k}
+\label{eq:RotateZFinal}
+\end{align}
+
+Note that in \eqref{eq:RotateZFinal}, the value before the imaginary number ${\bf k}$ did not change after the rotation. which means the error metric \eqref{eq:errorForManySpheres} of the ball stay the same.
 
 \subsection{A convenient fictitious input}
 
