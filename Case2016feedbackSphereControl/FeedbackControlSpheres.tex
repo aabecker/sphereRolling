@@ -298,8 +298,18 @@ Note that here the orientation of z axis can be denoted by traditional unit vect
 
 \subsection{Example: rolling a sphere around a circular arc to align sphere $z$ with world $z$ axis}
 
-\todo{solve this problem}
+To better illustrate the condition, let`s start with a generic example that is firstly assume the ball is randomly oriented and then pick up the $r_c$ and $\alpha_c$ to determine the center of the angle and finally do the gradient descent method to decrease the error every step until it reaches to a marginal scope. Here we pick up the $r_c$ which will make the configuration of the ball`s orientation periodical according to \todo{ [[insert references:Ball Rolling and Cone]] }
+    \begin{figure}%[htb]
+	\begin{center}
+	\begin{overpic}[width=.9\columnwidth]{OneBallLollipop}
+	\end{overpic}
+	\end{center}
+	\vspace{-1em}
+	\caption{ \label{fig:OneBallLollipop} This is the simulation result of our generic circumstance.We assume the $r_c$ to be $\frac{\sqrt{5}}{2}$ and the circle center always located on the left to the end point of the previous step. The upper graph is error curve in the control process and the other one is the path that was taken by the ball. We can tell that it really needs several steps to decrease the orientation error.
+}\vspace{-1em}
+\end{figure}
 
+While it is feasible to do the gradient descent method regardless of the actual initial orientation of ball and finally decrease its error to a marginal range. Besides, it is also obvious that we can achieve the same goal by doing the line motion along $x$ axis and $y$ axis for only 2 steps. However, we will demonstrate in the following that we can accomplish the same effect by doing the circular motion constrained by practical conditions without make it an optimization problem contain 3 variables.
 
 
 
