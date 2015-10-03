@@ -390,14 +390,38 @@ We can roll the system along circular arcs, as shown by Eq. \eqref{eq:RotatingAb
 Our problem is then to find $(r_c, \alpha_c, \ell_c, r_i)  $ that reduces \eqref{eq:errorForManySpheres}.  We then repeat this process until the error reduces to an acceptable level, or time runs out
 
 
-\todo{Some plots of this.}
+In previous part of our paper, we proved that given the circumstance of one ball the Z-axis of which was randomly oriented, we can always find the discrete steps to steer the ball to the desired orientation. However, situation will become complicated when it comes to the multiple balls with different radii. To specify the circular motion of multiple balls, we should choose three variables: radius of the circle of individual ball $r_c$ , $\alpha_c$ which can determine the center of the circle together with $r_c$ and the length of the arc the balls rolled along. This is obviously a three variables optimization problem, but in our feedback control system or the iterative system, we cannot make every step of the circular motion a three variable optimization system. Because the complicity of the optimization objective function and the number of variables will lead to drastically slow computation speed.
 
+To simplify the problem, we first readdress a fact that the maximum error that can be fixed in one step move will be given by Eq.\eqref{eq:MaxErrorFixed}. The ideal situation for calculating this is demonstrated in Fig.\ref{fig:OneBallLolliDemo}. 
 
-Long description of your optimization function.
+Note that in Fig.\ref{fig:OneBallLolliDemo}, the lollipop rotation axis bifurcates the current orientation angle into two equal parts and we can imagine that this is the worst condition about the orientation error, because every move along the circle, whatever the direction or length of the arc is, will decrease the error. Therefore, even if we can`t make every circular motion directly contribute to the decrease of the error, we need to control the increase of the error after the circular motion tolerable to our system.The idea here is to make the parameters $r_c$ and $\alpha_c$ adjustable to the quantity of the $\psi$ error and the orientation of the Z axis respectively:
+\begin{align}
+r_c=r_s\tan(\frac{\psi}{2})\label{eq:OneBallLolliDecRc}
+\end{align}
+where $r_c$ is the radius of the circular track and $r_s$ is the radius of the sphere.
 
+The circular track center is determined as $(-r_ccos(\theta), -r_ssin(\theta), 0)$.
 
+    \begin{figure}%[htb]
+	\begin{center}
+	\begin{overpic}[width=.9\columnwidth]{BallOrientation}
+	\end{overpic}
+	\end{center}
+	\vspace{-1em}
+	\caption{ \label{fig:BallOrientation} This is the overall view of our plate-ball system. We basically rotate the ball along the X or Y axis to decrease the orientation error and when the error cannot decrease any more, we roll the balls along a circular track so as to make the next round of X or Y direction rolling more effective.  
+}\vspace{-1em}
+\end{figure}
 
+To extend the result for multiple balls, let`s begin an imaginative experiment. Consider the condition with multiple balls of the same radius and their angular are different. We then calculate the arithmetic mean of $\psi_i$ to substitute the $\psi$ in Eq.\eqref{eq:OneBallLolliDecRc}. Although by doing this we cannot guarantee the lollipop rotation axis located exactly within the φ angle of every ball, what can be guaranteed is that for those balls that have comparatively big psi errors, the lollipop axis will be exactly located within the psi angle. Let`s take a look at the worse condition that there is at least one ball among them that has the situation similar to Fig.\ref{fig:BallOrientation} and we denote the error of a ball in the $k$th step as $\psi_{i,k,error}$, as we previously pointed that after the rotation the resulting error will not be higher than that in the worst condition $\psi_{k,error,max}$. So consider the errors of other balls which have better condition, the resulting error will be no higher  than $\psi_{k,error,max}$ thus the arithmetic mean of the resulting error is a bounded quantity. Note that the quantity $\psi_{k,error,max}$ here is a variable which will decrease after several steps of x or y direction rolling. If we extend this reasoning and the result to the situation for multiple balls with different radii and we use following equation to determine the $(k+1)$th step circular motion radius for $i$th ball:
+\begin{align}
+r_{i,k+1,c}=r_{i,s}\tan(\frac{\psi_{k,average}}{2}) \label{eq:MultiBallLolliDecRc}
+\end{align}
+where $\psi_{k,average}$ is the arithmetic mean of $\psi_i$ in the $k$th step.And we also use $(-r_ccos(\theta_{k,average}), -r_csin(\theta_{k,average}), 0)$ to determine the center of the balls. Here $\theta$ is also arithmetic mean. By doing this we can insure that the resulting error metric is less than $\psi_{k,error,max}$ which will generally decrease after several steps of x or y direction rolling:
+\begin{align}
+\psi_{k+1,error,max}<\psi_{k,error,max}<...<\psi_{0,error,max}\label{eq:ErrorDecrease}
+\end{align}
 
+Next, we will use simulation to further prove this point. According to that, as long as parameters $r_c$ and $\alpha_c$ observe certain rules, arbitrarily chosen arc will lead to convergence. We tried several random value and the following is one that arc equals to rolling along the circle 20 rounds.
 %P1: the classical system
 %Manipulation by rolling contacts is a convenient way to achieve dexterity with simple hardware.  This problem is of considerable interest to the robotic community (see \cite{Brockett1993, Armour2006, Marigo2000, Bicchi1995, Choudhury2001, Mukherjee2002,Date2004,Oriolo2005,Svinin2008a,Casagrande2009}).  
 
