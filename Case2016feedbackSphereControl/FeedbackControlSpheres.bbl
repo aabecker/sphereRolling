@@ -21,6 +21,77 @@
 \providecommand{\BIBdecl}{\relax}
 \BIBdecl
 
+\bibitem{Becker2012b}
+\BIBentryALTinterwordspacing
+A.~Becker. (2012, April) {``Iterative Feedback Control of Plate-Ball
+  Orientation and Position.'' MATLAB Central File Exchange}. [Online].
+  Available: \url{http://www.mathworks.com/matlabcentral/fileexchange/36252}
+\BIBentrySTDinterwordspacing
+
+\bibitem{Becker2012a}
+------, ``Ensemble control of robotic systems,'' Ph.D. dissertation, University
+  of Illinois at Urbana-Champaign, http://hdl.handle.net/2142/34221, Aug. 2012.
+
+\bibitem{Becker2012j}
+A.~Becker and T.~Bretl, ``Approximate steering of a plate-ball system under
+  bounded model perturbation using ensemble control,'' in \emph{IEEE/RSJ
+  International Conference on Intelligent Robots and Systems (IROS)},
+  Vilamoura, Portugal, Oct. 2012, pp. 5353--5359.
+
+\bibitem{Brockett1999}
+R.~W. Brockett and N.~Khaneja, ``On the control of quantum ensembles,'' in
+  \emph{System Theory: Modeling, Analysis and Control}, T.~Djaferis and
+  I.~Schick, Eds.\hskip 1em plus 0.5em minus 0.4em\relax Kluwer Academic
+  Publishers, 1999.
+
+\bibitem{Khaneja2000}
+N.~Khaneja, ``Geometric control in classical and quantum systems,'' Ph.D.
+  dissertation, Harvard University, 2000.
+
+\bibitem{Li2006}
+J.-S. Li and N.~Khaneja, ``Ensemble controllability of the {B}loch equations,''
+  in \emph{IEEE Conf. Dec. Cont.}, San Diego, CA, Dec. 2006, pp. 2483--2487.
+
+\bibitem{Li2006a}
+------, ``Control of inhomogeneous quantum ensembles,'' \emph{Physical Review A
+  (Atomic, Molecular, and Optical Physics)}, vol.~73, no.~3, p. 030302, 2006.
+
+\bibitem{Li2006b}
+J.-S. Li, ``Control of inhomogeneous ensembles,'' Ph.D. dissertation, Harvard
+  University, May 2006.
+
+\bibitem{Li2007}
+J.-S. Li and N.~Khaneja, ``Ensemble control of linear systems,'' in \emph{IEEE
+  Conf. Dec. Cont.}, New Orleans, LA, USA, Dec. 2007, pp. 3768--3773.
+
+\bibitem{Li2009}
+------, ``Ensemble control of {B}loch equations,'' \emph{{IEEE} Trans. Autom.
+  Control}, vol.~54, no.~3, pp. 528--536, Mar. 2009.
+
+\bibitem{Li2009a}
+S.~Li, ``A new perspective on control of uncertain complex systems,'' in
+  \emph{IEEE Conf. Dec. Cont.}, Dec. 2009, pp. 708--713.
+
+\bibitem{Li2011}
+J.-S. Li, ``Ensemble control of finite-dimensional time-varying linear
+  systems,'' \emph{{IEEE} Trans. Autom. Control}, vol.~56, no.~2, pp. 345--357,
+  Feb. 2011.
+
+\bibitem{Ruths2011}
+J.~Ruths, ``Optimal control of inhomogeneous ensembles,'' Ph.D. dissertation,
+  Washington University in St. Louis, St. Louis, Missouri, United States, June
+  2011.
+
+\bibitem{Ruths2011a}
+J.~Ruths and J.-S. Li, ``A multidimensional pseudospectral method for optimal
+  control of quantum ensembles,'' \emph{The Journal of Chemical Physics}, vol.
+  134, no.~4, pp. 044\,128--8, 01 2011.
+
+\bibitem{Das2015Broadcast}
+K.~Das and D.~Ghose, ``Broadcast control mechanism for positional consensus in
+  multiagent systems,'' \emph{Control Systems Technology, IEEE Transactions
+  on}, vol.~PP, no.~99, pp. 1--1, 2015.
+
 \bibitem{Brockett1993}
 R.~W. Brockett and L.~Dai, \emph{Nonholonomic Motion Planning}.\hskip 1em plus
   0.5em minus 0.4em\relax Springer, 1993, ch. 1. Non-holonomic kinematics and
@@ -30,21 +101,6 @@ R.~W. Brockett and L.~Dai, \emph{Nonholonomic Motion Planning}.\hskip 1em plus
 G.~Oriolo and M.~Vendittelli, ``A framework for the stabilization of general
   nonholonomic systems with an application to the plate-ball mechanism,''
   \emph{{IEEE} Trans. Robot.}, vol.~21, no.~2, pp. 162--175, Apr. 2005.
-
-\bibitem{Brockett1999}
-R.~W. Brockett and N.~Khaneja, ``On the control of quantum ensembles,'' in
-  \emph{System Theory: Modeling, Analysis and Control}, T.~Djaferis and
-  I.~Schick, Eds.\hskip 1em plus 0.5em minus 0.4em\relax Kluwer Academic
-  Publishers, 1999.
-
-\bibitem{Li2009}
-J.-S. Li and N.~Khaneja, ``Ensemble control of {B}loch equations,''
-  \emph{{IEEE} Trans. Autom. Control}, vol.~54, no.~3, pp. 528--536, Mar. 2009.
-
-\bibitem{Li2011}
-J.-S. Li, ``Ensemble control of finite-dimensional time-varying linear
-  systems,'' \emph{{IEEE} Trans. Autom. Control}, vol.~56, no.~2, pp. 345--357,
-  Feb. 2011.
 
 \bibitem{Becker2012}
 A.~Becker and T.~Bretl, ``Approximate steering of a unicycle under bounded

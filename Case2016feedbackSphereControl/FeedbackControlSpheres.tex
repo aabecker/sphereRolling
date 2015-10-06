@@ -135,10 +135,10 @@ Feedback Control of Multiple Balls using One Plate-Ball System
 
 
 \begin{abstract}
-In previous work we examined  the classical plate-ball system w
+A plate-ball system controls the orientation of a ball by rolling in the  $x$ and $y$ directions, using a flat plate to roll the ball. This classical system is often used to illustrate Lie bracket motion and underactuation. Our previous paper proved this system remains controllable under model perturbation that scales the ball radius by an unknown but bounded constant.  We also introduced a new version of the plate-ball system based on magnetic actuation.  This system is easy to implement and, enables simultaneous manipulation of multiple balls with different radii. 
 
-In this paper we revisit the classical plate-ball system and prove this system remains controllable under model perturbation that scales the ball radius by an unknown but bounded constant. 
-We present an algorithm for approximate steering and validate the algorithm with hardware experiments. To perform these experiments, we introduce a new version of the plate-ball system based on magnetic actuation.  This system is easy to implement and, with our steering algorithm, enables simultaneous manipulation of multiple balls with different radii. 
+This paper presents a feedback-controller for simultaneously steering multiple axis-symmetric balls to desired orientations.
+%We present an algorithm for approximate steering and validate the algorithm with hardware experiments. To perform these experiments, we introduce a new version of the plate-ball system based on magnetic actuation.  This system is easy to implement and, with our steering algorithm, enables simultaneous manipulation of multiple balls with different radii. 
 \end {abstract}
 
 
@@ -151,7 +151,7 @@ We present an algorithm for approximate steering and validate the algorithm with
 
 
 
-In previous work \todo{ [[insert references]] }we proved that a plate-ball system can be used in open-loop (no feedback) to steer a ball of unknown radius from an initial orientation to a desired orientation.  The work relied on a proof of controllability inspired by work in ensemble control [[insert references]].
+In previous work \cite{Becker2012b,Becker2012a,Becker2012j} we proved that a plate-ball system can be used in open-loop (no feedback) to steer a ball of unknown radius from an initial orientation to a desired orientation.  The work relied on a proof of controllability inspired by work in ensemble control~\cite{Brockett1999,Khaneja2000,Li2006,Li2006a,Li2006b,Li2007,Li2009,Li2009a,Li2011,Ruths2011,Ruths2011a,Das2015Broadcast} a
 
 In this work, we show how this same proof of controllability can be used to derive feedback controllers that can simultaneously roll multiple spheres from arbitrary initial orientations to goal locations using a global input provided by a single moving plate system.
 
@@ -175,11 +175,16 @@ This section describes our plate-ball system, the equations of motion, the error
 
 \subsection{Review on Quaternions}
 
+A 3$\times$3 rotation matrix describes rotation using 9 numbers with 6 constraints whereas a rotation quaternion uses 4 numbers with 1 constraint.  Using quaternions also avoids difficulties such as gimbal-lock and numerical instability. For these reasons, our algorithms and simulations use quaternions to describe rotation.
+
+
 A unit quaternion can represent either orientation or a rotation.  The general format of a quaternion is
 \begin{align}
 {\bf q} = a+u_x{\bf i}+u_y{\bf j}+u_z{\bf k}\label{eq:Quaternion}
 \end{align}
-where those numbers $a,u_x,u_y,u_z$ are all real numbers, and the part $a$ is defined as the scalar part of the quaternion and $u_x{\bf i}+u_y{\bf j}+u_z{\bf k}$ is defined as the vector part of the quaternion, which can denote an arbitrary vector in the $R^3$ space. For the purpose to using quaternions to express the rotation in $R^3$ space, all quaternions we use must be unit quaternions. Therefore, \eqref{eq:Quaternion} can represent a rotation only if $\sqrt{a^2+u_x^2+u_y^2+u_z^2}=1$.
+where $a,u_x,u_y,u_z$ are all real numbers.  $a$ is defined as the \emph{scalar part} of the quaternion and $u_x{\bf i}+u_y{\bf j}+u_z{\bf k}$ is defined as the vector part of the quaternion, which can denote an arbitrary vector in $\R^3$ space. 
+
+For the purpose to using quaternions to express the rotation in $\R^3$ space, all quaternions we use must be unit quaternions. Therefore, \eqref{eq:Quaternion} can represent a rotation only if $\sqrt{a^2+u_x^2+u_y^2+u_z^2}=1$.
 similar to Euler Formula of complex numbers, the Euler Formula also applies to quaternions:
 \begin{align}
 e^{\frac{\theta}{2} (u_x{\bf i}+u_y{\bf j}+u_z{\bf k})}=\cos(\frac{\theta}{2})+(u_x{\bf i}+u_y{\bf j}+u_z{\bf k})\sin(\frac{\theta}{2})\label{eq:quaternionsEuler}
@@ -200,7 +205,7 @@ A rotation about the world $z$-axis is
 {\bf q}_z(\theta) = \cos( \frac{\theta}{2})+{\bf k}\sin(\frac{\theta}{2}) \label{eq:QuaternionZaxis}
 \end{align}
 
-A rotation about the unit axis $[v_x,v_y,v_z]^t$ is
+A rotation about the arbitrary unit axis $[v_x,v_y,v_z]^t$ is
 \begin{align}
 {\bf q}_{Arb}(\theta) = \cos( \frac{\theta}{2})+(v_x{\bf i}+v_y{\bf j}+v_z{\bf k})\sin(\frac{\theta}{2}) \label{eq:QuaternionUnitaxis}
 \end{align}
@@ -209,8 +214,9 @@ Composing rotations with quaternions is represented by multiplication.  A compos
 \begin{align}
 {\bf P}_1={\bf q}_2{\bf q}_1{\bf P}_0{\bf q}_1^*{\bf q}_2^*
 \end{align}
-Where ${\bf P}_1$ is the rotated vector or matrix and the ${\bf P}_0$ is the vector or matrix before rotation; ${\bf q}_1^*$ and ${\bf q}_2^*$ represent conjugate quaternions and the product happen between quaternions are all Hamilton Product. 
-Note that traditional rotation matrices describe rotation using 9 numbers subscribed to 6 constraints whereas the quaternions describe it using 4 numbers subscribed to 1 constraints and can circumvent gimbal-lock and numerical instability. Therefore, in our algorithm simulation, we adopt quaternion rotation.
+Where ${\bf P}_1$ is the rotated vector or matrix and the ${\bf P}_0$ is the vector or matrix before rotation; ${\bf q}_1^*$ and ${\bf q}_2^*$ represent conjugate quaternions and all multiplications between quaternions are \emph{Hamilton products}. 
+\todo{we have to explain what a Hamilton product is}
+
 
 
 
