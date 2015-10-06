@@ -273,8 +273,8 @@ If the sphere only rolls along an arc of length $\ell_c$, the resulting rotation
 
 1.rotate about the axis $[ -r_c \cos(\alpha_c), -r_c\sin(\alpha_c),r_i]^\top$:
 
-\begin{align}
-{\bf q}_1(r_c, \alpha_c, \ell_c, r_i)   = \cos( -\frac{\theta_c}{2})+ \frac{\sin({-\frac{\theta_c}{2}})}{\sqrt{r_c^2+r_i^2}}(-r_c\cos(\alpha_c){\bf i}-r_c\sin(\alpha_c){\bf j}+r_i{\bf k}) \label{eq:RotatingAboutACircleArc1}
+\begin{align}\nonumber
+{\bf q}_1(r_c, \alpha_c, \ell_c, r_i)   = \cos( -\frac{\theta_c}{2})+\\ \frac{\sin({-\frac{\theta_c}{2}})}{\sqrt{r_c^2+r_i^2}}(-r_c\cos(\alpha_c){\bf i}-r_c\sin(\alpha_c){\bf j}+r_i{\bf k}) \label{eq:RotatingAboutACircleArc1}
        \end{align}
 where $\theta_c=\frac{\ell_c\sqrt{r_i^2+r_c^2}}{r_ir_c}$.
 
@@ -349,8 +349,8 @@ We further take the advantage of the symmetric shape of balls and obtain a more 
 
 We start with a convenient mathematical fiction, and assume an input exists that rotates all spheres about the world $z$ axis at the constant rate of $1/r_i$.  
 We will use quaternion rotation to show that under this input the error metric \eqref{eq:errorForManySpheres} does not change. Let $\theta$ be a random angle. Then use it to rotate the $Z$ which is $z$ axis of the ball around the world $z$ axis:
-\begin{align}
-{\bf q_z}(\frac{\theta}{2}){\bf Z}_0{\bf q_z}(\frac{\theta}{2})^*=(\cos(\frac{\theta}{2})+\sin(\frac{\theta}{2}){\bf k})(x{\bf i}+y{\bf j}+z{\bf k})(\cos(\frac{\theta}{2})-\sin(\frac{\theta}{2}){\bf k})
+\begin{align}\nonumber
+{\bf q_z}(\frac{\theta}{2}){\bf Z}_0{\bf q_z}(\frac{\theta}{2})^*=(\cos(\frac{\theta}{2})+\\ \sin(\frac{\theta}{2}){\bf k})(x{\bf i}+y{\bf j}+z{\bf k})(\cos(\frac{\theta}{2})-\sin(\frac{\theta}{2}){\bf k})
 \end{align}
 
 then we get
