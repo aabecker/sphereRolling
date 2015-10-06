@@ -184,7 +184,7 @@ A unit quaternion can represent either orientation or a rotation.  The general f
 \end{align}
 where $a,u_x,u_y,u_z$ are all real numbers.  $a$ is defined as the \emph{scalar part} of the quaternion and $u_x{\bf i}+u_y{\bf j}+u_z{\bf k}$ is defined as the vector part of the quaternion, which can denote an arbitrary vector in $\R^3$ space. 
 
-For the purpose to using quaternions to express the rotation in $\R^3$ space, all quaternions we use must be unit quaternions. Therefore, \eqref{eq:Quaternion} can represent a rotation only if $\sqrt{a^2+u_x^2+u_y^2+u_z^2}=1$.
+For the purpose of using quaternions to express the rotation in $\R^3$ space, all quaternions we use must be unit quaternions. Therefore, \eqref{eq:Quaternion} can represent a rotation only if $\sqrt{a^2+u_x^2+u_y^2+u_z^2}=1$.
 similar to Euler Formula of complex numbers, the Euler Formula also applies to quaternions:
 \begin{align}
 e^{\frac{\theta}{2} (u_x{\bf i}+u_y{\bf j}+u_z{\bf k})}=\cos(\frac{\theta}{2})+(u_x{\bf i}+u_y{\bf j}+u_z{\bf k})\sin(\frac{\theta}{2})\label{eq:quaternionsEuler}
@@ -215,8 +215,23 @@ Composing rotations with quaternions is represented by multiplication.  A compos
 {\bf P}_1={\bf q}_2{\bf q}_1{\bf P}_0{\bf q}_1^*{\bf q}_2^*
 \end{align}
 Where ${\bf P}_1$ is the rotated vector or matrix and the ${\bf P}_0$ is the vector or matrix before rotation; ${\bf q}_1^*$ and ${\bf q}_2^*$ represent conjugate quaternions and all multiplications between quaternions are \emph{Hamilton products}. 
-\todo{we have to explain what a Hamilton product is}
 
+The \emph{Hamilton products} is a common multiplication between quaternions. The result of this kind of multiplication is given by distributive law and basic operation of imaginary unit and operation of real numbers. The \emph{Hamilton products} between $(a_1+b_1{\bf i}+c_1{\bf j}+d_1{\bf k})$ and $(a_2+b_2{\bf i}+c_2{\bf j}+d_2{\bf k})$ is given by the following expression:
+\begin{align*}\nonumber
+a_1a_2+a_1b_2{\bf i}+a_1c_2{\bf j}+a_1d_2{\bf k}+\\ b_1a_2{\bf i}+b_1b_2{\bf i}^2+b_1c_2{\bf ij}+b_1d_2{\bf ik}+\\ c_1a_2{\bf j}+c_1b_2{\bf ji}+c_1c_2{\bf j}^2+c_1d_2{\bf jk}+\\ d_1a_2{\bf k}+d_1b_2{\bf ki}+d_1c_2{\bf kj}+d_1d_2{\bf k}^2
+\end{align*}
+where $a_1$,$a_2$,$b_1$,$b_2$,$c_1$,$c_2$,$d_1$,$d_2$ are all real numbers and the basic multiplication between imaginary units is determined by the following:
+\begin{align}\nonumber
+{\bf i}^2={\bf j}^2={\bf k}^2={\bf ijk}=-1
+\end{align}
+
+Using this we can simplify the generic \emph{Hamilton products} between $(a_1+b_1{\bf i}+c_1{\bf j}+d_1{\bf k})$ and $(a_2+b_2{\bf i}+c_2{\bf j}+d_2{\bf k})$ to the following form:
+\begin{align*}\nonumber
+a_1a_2-b_1b_2-c_1c_2-d_1d_2\\
++(a_1b_2+b_1a_2+c_1d_2-d_1c_2){\bf i}\\
++(a_1c_2-b_1d_2+c_1a_2+d_1b_2){\bf j}\\
++(a_1d_2+b_1c_2-c_1b_2+d_1a_2){\bf k}
+\end{align*}
 
 
 

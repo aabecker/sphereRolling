@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2015.9.19)  7 OCT 2015 02:42
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2015.9.19)  7 OCT 2015 05:30
 entering extended mode
 **FeedbackControlSpheres.tex
 
@@ -625,68 +625,64 @@ Overfull \hbox (1.88457pt too wide) in paragraph at lines 165--165
 [] 
  []
 
-
-Overfull \hbox (1.88457pt too wide) in paragraph at lines 218--218
-[] 
- []
-
-<./pictures/pdf/CNCsetupPic.pdf, id=124, 361.35pt x 350.30875pt>
-File: ./pictures/pdf/CNCsetupPic.pdf Graphic file (type pdf)
-
-<use ./pictures/pdf/CNCsetupPic.pdf>
-Package pdftex.def Info: ./pictures/pdf/CNCsetupPic.pdf used on input line 230.
-
-(pdftex.def)             Requested size: 221.14479pt x 214.38824pt.
- [1{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}
+[1{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}
 
 
 ]
+<./pictures/pdf/CNCsetupPic.pdf, id=155, 361.35pt x 350.30875pt>
+File: ./pictures/pdf/CNCsetupPic.pdf Graphic file (type pdf)
 
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 306.
+<use ./pictures/pdf/CNCsetupPic.pdf>
+Package pdftex.def Info: ./pictures/pdf/CNCsetupPic.pdf used on input line 245.
 
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 306.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 306.
+(pdftex.def)             Requested size: 221.14479pt x 214.38824pt.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 306.
+(hyperref)                removing `math shift' on input line 321.
 
 
-Overfull \hbox (1.88457pt too wide) in paragraph at lines 308--308
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 321.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 321.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 321.
+
+[2 <D:/Documents/GitHub/sphereRolling/Case2016feedbackSphereControl/pictures/pd
+f/CNCsetupPic.pdf>]
+Overfull \hbox (1.88457pt too wide) in paragraph at lines 323--323
 [] 
  []
 
-<./pictures/pdf/OneBallLollipop.pdf, id=156, 597.55246pt x 845.07718pt>
+<./pictures/pdf/OneBallLollipop.pdf, id=215, 597.55246pt x 845.07718pt>
 File: ./pictures/pdf/OneBallLollipop.pdf Graphic file (type pdf)
 
 <use ./pictures/pdf/OneBallLollipop.pdf>
 Package pdftex.def Info: ./pictures/pdf/OneBallLollipop.pdf used on input line 
-311.
+326.
 (pdftex.def)             Requested size: 221.14479pt x 312.75102pt.
- [2 <D:/Documents/GitHub/sphereRolling/Case2016feedbackSphereControl/pictures/p
-df/CNCsetupPic.pdf>]
-Underfull \hbox (badness 5147) in paragraph at lines 329--330
+
+Underfull \hbox (badness 5147) in paragraph at lines 344--345
 []\OT1/ptm/m/n/10 We fur-ther take the ad-van-tage of the sym-met-ric
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 329--330
+Underfull \hbox (badness 10000) in paragraph at lines 344--345
 \OT1/ptm/m/n/10 shape of balls and ob-tain a more generic way
  []
 
 
-Underfull \hbox (badness 7685) in paragraph at lines 329--330
+Underfull \hbox (badness 7685) in paragraph at lines 344--345
 \OT1/ptm/m/n/10 to do this cir-cu-lar mo-tion with the ball`s ini-tial
  []
 
 
-Underfull \hbox (badness 3492) in paragraph at lines 329--330
+Underfull \hbox (badness 3492) in paragraph at lines 344--345
 \OT1/ptm/m/n/10 ori-en-ta-tion $\OT1/cmr/m/n/10 [\OML/cmm/m/it/10 x; y; z\OT1/c
 mr/m/n/10 ][]$\OT1/ptm/m/n/10 : $\OT1/cmr/bx/n/10 q[]\OT1/cmr/m/n/10 (\OML/cmm/
 m/it/10 r[]; []\OT1/cmr/m/n/10 ([])\OML/cmm/m/it/10 ; []; r[]\OT1/cmr/m/n/10 )$
@@ -698,38 +694,38 @@ File: ./pictures/pdf/OneBallLolliDemo.pdf Graphic file (type pdf)
 
 <use ./pictures/pdf/OneBallLolliDemo.pdf>
 Package pdftex.def Info: ./pictures/pdf/OneBallLolliDemo.pdf used on input line
- 336.
+ 351.
 (pdftex.def)             Requested size: 221.14479pt x 312.7527pt.
  [3 <D:/Documents/GitHub/sphereRolling/Case2016feedbackSphereControl/pictures/p
 df/OneBallLollipop.pdf> <D:/Documents/GitHub/sphereRolling/Case2016feedbackSphe
 reControl/pictures/pdf/OneBallLolliDemo.pdf>]
-Underfull \hbox (badness 10000) in paragraph at lines 409--410
+Underfull \hbox (badness 10000) in paragraph at lines 424--425
 []\OT1/ptm/m/n/10 The cir-cu-lar track cen-ter is de-ter-mined as
  []
 
-<./pictures/pdf/BallOrientation.pdf, id=288, 794.9703pt x 322.47705pt>
+<./pictures/pdf/BallOrientation.pdf, id=286, 794.9703pt x 322.47705pt>
 File: ./pictures/pdf/BallOrientation.pdf Graphic file (type pdf)
 
 <use ./pictures/pdf/BallOrientation.pdf>
 Package pdftex.def Info: ./pictures/pdf/BallOrientation.pdf used on input line 
-413.
+428.
 (pdftex.def)             Requested size: 221.14479pt x 89.7074pt.
 Missing character: There is no Ï in font ptmr7t!
 Missing character: There is no † in font ptmr7t!
 
-Underfull \hbox (badness 10000) in paragraph at lines 424--426
+Underfull \hbox (badness 10000) in paragraph at lines 439--441
 \OT1/ptm/m/n/10 where $\OML/cmm/m/it/10  []$ \OT1/ptm/m/n/10 is the arith-metic
  mean
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 424--426
+Underfull \hbox (badness 10000) in paragraph at lines 439--441
 \OT1/ptm/m/n/10 of $\OML/cmm/m/it/10  []$ \OT1/ptm/m/n/10 in the $\OML/cmm/m/it
 /10 k$\OT1/ptm/m/n/10 th step.And we also use
  []
 
 
-Underfull \hbox (badness 6125) in paragraph at lines 424--426
+Underfull \hbox (badness 6125) in paragraph at lines 439--441
 $\OT1/cmr/m/n/10 (\OMS/cmsy/m/n/10  \OML/cmm/m/it/10 r[]cos\OT1/cmr/m/n/10 (\OM
 L/cmm/m/it/10 []\OT1/cmr/m/n/10 )\OML/cmm/m/it/10 ; \OMS/cmsy/m/n/10  \OML/cmm
 /m/it/10 r[]sin\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 []\OT1/cmr/m/n/10 )\OML/cmm/m
@@ -739,107 +735,107 @@ L/cmm/m/it/10 []\OT1/cmr/m/n/10 )\OML/cmm/m/it/10 ; \OMS/cmsy/m/n/10  \OML/cmm
 [4 <D:/Documents/GitHub/sphereRolling/Case2016feedbackSphereControl/pictures/pd
 f/BallOrientation.pdf>]
 
-LaTeX Warning: Citation `Date 2004' on page 5 undefined on input line 476.
+LaTeX Warning: Citation `Date 2004' on page 5 undefined on input line 491.
 
 [5] [6]
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 768.
+(hyperref)                removing `math shift' on input line 783.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 768.
+(hyperref)                removing `math shift' on input line 783.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 813.
+(hyperref)                removing `math shift' on input line 828.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\theta' on input line 813.
+(hyperref)                removing `\theta' on input line 828.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 813.
+(hyperref)                removing `math shift' on input line 828.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 813.
+(hyperref)                removing `math shift' on input line 828.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 813.
+(hyperref)                removing `math shift' on input line 828.
 
-<./pictures/pdf/PryorsPrim1.pdf, id=495, 260.17201pt x 212.40154pt>
+<./pictures/pdf/PryorsPrim1.pdf, id=494, 260.17201pt x 212.40154pt>
 File: ./pictures/pdf/PryorsPrim1.pdf Graphic file (type pdf)
 
 <use ./pictures/pdf/PryorsPrim1.pdf>
-Package pdftex.def Info: ./pictures/pdf/PryorsPrim1.pdf used on input line 847.
+Package pdftex.def Info: ./pictures/pdf/PryorsPrim1.pdf used on input line 862.
 
 (pdftex.def)             Requested size: 110.57239pt x 90.27107pt.
 
-<./pictures/pdf/PryorsPrim1Subdivided.pdf, id=496, 260.17201pt x 212.40154pt>
+<./pictures/pdf/PryorsPrim1Subdivided.pdf, id=495, 260.17201pt x 212.40154pt>
 File: ./pictures/pdf/PryorsPrim1Subdivided.pdf Graphic file (type pdf)
 
 <use ./pictures/pdf/PryorsPrim1Subdivided.pdf>
 Package pdftex.def Info: ./pictures/pdf/PryorsPrim1Subdivided.pdf used on input
- line 855.
+ line 870.
 (pdftex.def)             Requested size: 110.57239pt x 90.27107pt.
  [7 <D:/Documents/GitHub/sphereRolling/Case2016feedbackSphereControl/pictures/p
 df/PryorsPrim1.pdf> <D:/Documents/GitHub/sphereRolling/Case2016feedbackSphereCo
 ntrol/pictures/pdf/PryorsPrim1Subdivided.pdf>]
 
-LaTeX Warning: Reference `fig:PryorPaths' on page 8 undefined on input line 940
+LaTeX Warning: Reference `fig:PryorPaths' on page 8 undefined on input line 955
 .
 
 
-LaTeX Warning: Reference `fig:optimPaths' on page 8 undefined on input line 963
+LaTeX Warning: Reference `fig:optimPaths' on page 8 undefined on input line 978
 .
 
-LaTeX Font Info:    Try loading font information for OMS+ptm on input line 974.
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 989.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\omsptm.fd"
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 974.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 989.
+ [8]
+
+LaTeX Warning: Reference `fig:PryorPaths' on page 9 undefined on input line 101
+5.
 
 
-LaTeX Warning: Reference `fig:PryorPaths' on page 8 undefined on input line 100
-0.
+LaTeX Warning: Reference `fig:optimPaths' on page 9 undefined on input line 101
+5.
 
 
-LaTeX Warning: Reference `fig:optimPaths' on page 8 undefined on input line 100
-0.
+LaTeX Warning: Reference `fig:OptimVsPryor' on page 9 undefined on input line 1
+015.
 
 
-LaTeX Warning: Reference `fig:OptimVsPryor' on page 8 undefined on input line 1
-000.
+LaTeX Warning: Reference `fig:substrateDesign' on page 9 undefined on input lin
+e 1017.
 
-
-LaTeX Warning: Reference `fig:substrateDesign' on page 8 undefined on input lin
-e 1002.
-
-<./pictures/pdf/TheoryExpRadfor10Mvs.pdf, id=529, 533.08351pt x 377.30815pt>
+<./pictures/pdf/TheoryExpRadfor10Mvs.pdf, id=535, 533.08351pt x 377.30815pt>
 File: ./pictures/pdf/TheoryExpRadfor10Mvs.pdf Graphic file (type pdf)
 
 <use ./pictures/pdf/TheoryExpRadfor10Mvs.pdf>
 Package pdftex.def Info: ./pictures/pdf/TheoryExpRadfor10Mvs.pdf used on input 
-line 1007.
+line 1022.
 (pdftex.def)             Requested size: 196.57523pt x 139.12973pt.
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <8> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 1011.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 1026.
 
 
 
-LaTeX Warning: Reference `fig:optimPaths' on page 8 undefined on input line 101
-1.
+LaTeX Warning: Reference `fig:optimPaths' on page 9 undefined on input line 102
+6.
 
 
-LaTeX Warning: Reference `fig:optimPaths' on page 8 undefined on input line 101
-1.
+LaTeX Warning: Reference `fig:optimPaths' on page 9 undefined on input line 102
+6.
 
-[8]
+
 (D:\Documents\GitHub\sphereRolling\Case2016feedbackSphereControl\FeedbackContro
 lSpheres.bbl
 Underfull \hbox (badness 10000) in paragraph at lines 32--34
@@ -864,16 +860,14 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the US letter (8.5in X 11in) paper size.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1039.
-[10
-
-]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1039.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1054.
+[10]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1054.
 
 (D:\Documents\GitHub\sphereRolling\Case2016feedbackSphereControl\FeedbackContro
 lSpheres.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1039.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1039.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1054.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1054.
 
 Package rerunfilecheck Info: File `FeedbackControlSpheres.out' has not changed.
 
@@ -885,46 +879,43 @@ LaTeX Warning: There were undefined references.
 
 LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1039.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1054.
  ) 
 Here is how much of TeX's memory you used:
- 8904 strings out of 493921
- 132523 string characters out of 3147258
- 226091 words of memory out of 3000000
+ 8903 strings out of 493921
+ 132510 string characters out of 3147258
+ 225091 words of memory out of 3000000
  11912 multiletter control sequences out of 15000+200000
  49274 words of font info for 111 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
  36i,18n,38p,1511b,473s stack positions out of 5000i,500n,10000p,200000b,50000s
-pdfTeX warning (dest): name{equation.6.26} has been referenced but does not e
-xist, replaced by a fixed one
-
-{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}<C:/Program Files/
-MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Program Files/MiKTeX 2
-.9/fonts/type1/public/amsfonts/cm/cmbx7.pfb><C:/Program Files/MiKTeX 2.9/fonts/
-type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/pu
-blic/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/ams
-fonts/cm/cmmi5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/
-cmmi6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb
-><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Prog
-ram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi9.pfb><C:/Program Files
-/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2
-.9/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Program Files/MiKTeX 2.9/fonts/t
-ype1/public/amsfonts/cm/cmr6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/publi
-c/amsfonts/cm/cmr7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts
-/cm/cmr8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10
-.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C:/
-Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy6.pfb><C:/Program F
-iles/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files/MiKT
-eX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Program Files/MiKTeX 2.9/fo
-nts/type1/public/amsfonts/cm/cmsy9.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1
-/public/amsfonts/symbols/msbm10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/ur
-w/courier/ucrr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.
-pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmbi8a.pfb><C:/Program 
-Files/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Program Files/MiKTeX 2.9/
-fonts/type1/urw/times/utmri8a.pfb>
-Output written on FeedbackControlSpheres.pdf (10 pages, 844034 bytes).
+{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}<C:/Program File
+s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Program Files/MiKTeX
+ 2.9/fonts/type1/public/amsfonts/cm/cmbx7.pfb><C:/Program Files/MiKTeX 2.9/font
+s/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/
+public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/a
+msfonts/cm/cmmi5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/c
+m/cmmi6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.p
+fb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Pr
+ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi9.pfb><C:/Program Fil
+es/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX
+ 2.9/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Program Files/MiKTeX 2.9/fonts
+/type1/public/amsfonts/cm/cmr6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/pub
+lic/amsfonts/cm/cmr7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfon
+ts/cm/cmr8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy
+10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C
+:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy6.pfb><C:/Program
+ Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files/Mi
+KTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Program Files/MiKTeX 2.9/
+fonts/type1/public/amsfonts/cm/cmsy9.pfb><C:/Program Files/MiKTeX 2.9/fonts/typ
+e1/public/amsfonts/symbols/msbm10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/
+urw/courier/ucrr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmb8
+a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmbi8a.pfb><C:/Progra
+m Files/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Program Files/MiKTeX 2.
+9/fonts/type1/urw/times/utmri8a.pfb>
+Output written on FeedbackControlSpheres.pdf (10 pages, 844476 bytes).
 PDF statistics:
- 715 PDF objects out of 1000 (max. 8388607)
- 124 named destinations out of 1000 (max. 500000)
+ 714 PDF objects out of 1000 (max. 8388607)
+ 123 named destinations out of 1000 (max. 500000)
  276 words of extra memory for PDF output out of 10000 (max. 10000000)
 
