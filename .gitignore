@@ -8,3 +8,7 @@
 *.blg
 
 *.aux
+
+*.log
+
+*.gz

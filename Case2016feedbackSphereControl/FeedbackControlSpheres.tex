@@ -321,7 +321,7 @@ While it is feasible to do the gradient descent method regardless of the actual 
 Consider a situation in \ref{fig:OneBallLolliDemo}, we can calculate the maximum $\psi$ error that can be fixed:
 
 \begin{align}
-\psi_{error,max}=\pi-2 \arctan(\frac{r_s}{r_c})
+\psi_{error,max}=\pi-2 \arctan\left(\frac{r_s}{r_c}\right)
 \label{eq:MaxErrorFixed}
 \end{align}
 where $r_s$ denotes the radius of the sphere and $r_c$ denotes the radius of the circle. Accordingly, the arc that will be rolled through is $\frac{r_cr_s\pi}{\sqrt{r_c^2+r_s^2}}$. Note that it seems that we can fix any error smaller than $2\pi$, however, in practical circumstances there will be a maximum of $r_s$ which is constrained by the workspace.
